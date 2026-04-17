@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VANI Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="#">VANI</a>
+        <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+        <nav class="nav" aria-label="주요 메뉴">
+          <a href="#">Resume</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact">Contact</a>
+          <a href="#contact">KakaoTalk</a>
+          <a href="#contact">Instagram</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section" id="top">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="hero-kicker">Design Studio</p>
+            <h1>
+              바른 디자인,<br />
+              니즈를 아는 디자인.
+            </h1>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+          </div>
+        </div>
+        <a class="scroll-indicator" href="#about">Scroll ↓</a>
+      </section>
+
+      <section class="about section" id="about">
+        <div class="container narrow">
+          <h2>About</h2>
+          <p>
+            감정이 닿는 미니멀한 화면을 설계합니다.<br />
+            사용자 니즈를 읽고, 브랜드의 결을 정리해 전달력 있는 결과물로 만듭니다.<br />
+            조용하지만 오래 남는 경험을 목표로 합니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="reviews section" id="reviews">
+        <div class="container">
+          <h2>Review</h2>
+          <div class="review-track" id="reviewTrack">
+            <article class="review-card">
+              <p>
+                “브랜드 톤을 정확히 읽어주셔서 결과물이 처음 의도보다 더 좋아졌어요.”
+              </p>
+              <span>— A. Studio</span>
+            </article>
+            <article class="review-card">
+              <p>
+                “복잡한 요구사항을 깔끔하게 정리해 주셔서 커뮤니케이션이 정말 편했습니다.”
+              </p>
+              <span>— Bloom Co.</span>
+            </article>
+            <article class="review-card">
+              <p>
+                “차분한 비주얼과 사용성이 함께 잡혀서 고객 반응이 훨씬 좋아졌습니다.”
+              </p>
+              <span>— Mono Lab</span>
+            </article>
+            <article class="review-card">
+              <p>
+                “디테일한 배려가 느껴지는 작업이었고, 다음 프로젝트도 함께하고 싶어요.”
+              </p>
+              <span>— D. Project</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="portfolio section" id="portfolio">
+        <div class="container">
+          <h2>Portfolio</h2>
+          <div class="portfolio-grid">
+            <a class="portfolio-item" href="detail-brand.html">
+              <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=80" alt="브랜드 디자인" />
+              <span class="overlay">
+                <strong>Brand Identity</strong>
+                <em>감성 기반 리브랜딩</em>
+              </span>
+            </a>
+            <a class="portfolio-item" href="detail-web.html">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80" alt="웹 디자인" />
+              <span class="overlay">
+                <strong>Web Experience</strong>
+                <em>미니멀 랜딩 페이지</em>
+              </span>
+            </a>
+            <a class="portfolio-item" href="detail-editorial.html">
+              <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?auto=format&fit=crop&w=900&q=80" alt="에디토리얼 디자인" />
+              <span class="overlay">
+                <strong>Editorial</strong>
+                <em>시각 흐름 중심 편집</em>
+              </span>
+            </a>
+            <a class="portfolio-item" href="detail-campaign.html">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="캠페인 디자인" />
+              <span class="overlay">
+                <strong>Campaign</strong>
+                <em>디지털 프로모션 디자인</em>
+              </span>
+            </a>
+          </div>
+          <div class="portfolio-cta-wrap">
+            <a class="btn" href="#">View All Projects</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact section" id="contact">
+        <div class="container narrow">
+          <h2>Contact</h2>
+          <form class="contact-form" action="#" method="post">
+            <label>
+              Name
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Phone
+              <input type="tel" name="phone" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <div class="contact-actions">
+              <button type="submit" class="btn">Submit</button>
+              <a class="btn btn-outline" href="#" role="button">KakaoTalk</a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
