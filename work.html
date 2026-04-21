@@ -144,7 +144,32 @@
         });
       };
 
+      const lockButtonWidth = (button) => {
+        const englishLabel = button.dataset.en;
+        const koreanLabel = button.dataset.ko;
+
+        if (!englishLabel || !koreanLabel) return;
+
+        button.textContent = englishLabel;
+        const englishWidth = button.getBoundingClientRect().width;
+
+        button.textContent = koreanLabel;
+        const koreanWidth = button.getBoundingClientRect().width;
+
+        button.textContent = englishLabel;
+        button.style.width = `${Math.ceil(Math.max(englishWidth, koreanWidth))}px`;
+      };
+
       filterButtons.forEach((button) => {
+        if (button.dataset.filter !== "all") {
+          setButtonLabel(button, false);
+
+          button.addEventListener("mouseenter", () => setButtonLabel(button, true));
+          button.addEventListener("mouseleave", () => setButtonLabel(button, false));
+          button.addEventListener("focus", () => setButtonLabel(button, true));
+          button.addEventListener("blur", () => setButtonLabel(button, false));
+        }
+
         button.addEventListener("click", () => {
           filterButtons.forEach((item) => {
             item.classList.remove("active");
