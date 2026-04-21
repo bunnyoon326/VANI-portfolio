@@ -364,6 +364,13 @@ h2 {
   position: relative;
 }
 
+.portfolio-guide {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+  text-align: center;
+}
+
 .portfolio-lane-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -397,13 +404,15 @@ h2 {
 }
 
 .lane-heading {
+  align-items: flex-start;
   justify-content: flex-start;
   padding: 0;
   margin: 0;
-  font-weight: 600;
-  cursor: default;
   border: 0;
   background: transparent;
+  font-size: 24px !important;
+  font-weight: 300 !important;
+  line-height: 1;
 }
 
 .lane-heading:hover {
@@ -437,8 +446,7 @@ h2 {
 }
 
 .lane-card:hover .lane-overlay,
-.lane-card:focus-within .lane-overlay,
-.lane-card:focus-visible .lane-overlay {
+.lane-card:focus-within .lane-overlay {
   opacity: 1;
 }
 
