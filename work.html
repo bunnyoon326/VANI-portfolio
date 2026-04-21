@@ -51,14 +51,14 @@
           <div class="work-filter" role="tablist" aria-label="포트폴리오 필터">
             <button class="work-filter-btn active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
             <button class="work-filter-btn" type="button" data-filter="website" data-en="Website" data-ko="웹사이트" role="tab" aria-selected="false">Website</button>
-            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail Page" data-ko="상세페이지" role="tab" aria-selected="false">Detail Page</button>
-            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social" data-ko="SNS 콘텐츠 디자인" role="tab" aria-selected="false">Social</button>
-            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package" data-ko="패키지 디자인" role="tab" aria-selected="false">Package</button>
-            <button class="work-filter-btn" type="button" data-filter="card" data-en="Card" data-ko="명함 디자인" role="tab" aria-selected="false">Card</button>
-            <button class="work-filter-btn" type="button" data-filter="banner" data-en="Banner" data-ko="배너 디자인" role="tab" aria-selected="false">Banner</button>
-            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="Presentation" data-ko="프레젠테이션 디자인" role="tab" aria-selected="false">Presentation</button>
-            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial" data-ko="책자 디자인" role="tab" aria-selected="false">Editorial</button>
-            <button class="work-filter-btn" type="button" data-filter="print" data-en="Print" data-ko="홍보물 디자인" role="tab" aria-selected="false">Print</button>
+            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail" data-ko="상세페이지" role="tab" aria-selected="false">Detail</button>
+            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social" data-ko="SNS" role="tab" aria-selected="false">Social</button>
+            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package" data-ko="패키지" role="tab" aria-selected="false">Package</button>
+            <button class="work-filter-btn" type="button" data-filter="card" data-en="Card" data-ko="명함" role="tab" aria-selected="false">Card</button>
+            <button class="work-filter-btn" type="button" data-filter="banner" data-en="Banner" data-ko="배너" role="tab" aria-selected="false">Banner</button>
+            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="PPT" data-ko="PPT" role="tab" aria-selected="false">PPT</button>
+            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial" data-ko="책자" role="tab" aria-selected="false">Editorial</button>
+            <button class="work-filter-btn" type="button" data-filter="print" data-en="Print" data-ko="홍보물" role="tab" aria-selected="false">Print</button>
           </div>
 
           <div class="work-gallery-grid" id="workGalleryGrid">
@@ -121,6 +121,13 @@
       const filterButtons = document.querySelectorAll(".work-filter-btn");
       const galleryCards = document.querySelectorAll(".work-gallery-card");
 
+      const setButtonLabel = (button, showKorean) => {
+        const englishLabel = button.dataset.en || button.textContent.trim();
+        const koreanLabel = button.dataset.ko;
+
+        if (!koreanLabel) return;
+        button.textContent = showKorean ? koreanLabel : englishLabel;
+      };
 
       const hideTimers = new WeakMap();
 
@@ -151,41 +158,6 @@
           hideTimers.set(card, timeoutId);
         });
       };
-
-      const reserveFilterButtonWidth = () => {
-        const ruler = document.createElement("span");
-        ruler.style.position = "absolute";
-        ruler.style.visibility = "hidden";
-        ruler.style.whiteSpace = "nowrap";
-        ruler.style.pointerEvents = "none";
-        ruler.style.inset = "-9999px auto auto -9999px";
-        document.body.appendChild(ruler);
-
-        filterButtons.forEach((button) => {
-          const koLabel = button.dataset.ko;
-          if (!koLabel) return;
-
-          const enLabel = button.dataset.en || button.textContent.trim();
-          const computed = window.getComputedStyle(button);
-          ruler.style.font = computed.font;
-          ruler.style.letterSpacing = computed.letterSpacing;
-
-          ruler.textContent = enLabel;
-          const enWidth = ruler.getBoundingClientRect().width;
-          ruler.textContent = koLabel;
-          const koWidth = ruler.getBoundingClientRect().width;
-
-          const paddingX = parseFloat(computed.paddingLeft) + parseFloat(computed.paddingRight);
-          const borderX = parseFloat(computed.borderLeftWidth) + parseFloat(computed.borderRightWidth);
-          const reservedWidth = Math.ceil(Math.max(enWidth, koWidth) + paddingX + borderX);
-
-          button.style.width = `${reservedWidth}px`;
-        });
-
-        ruler.remove();
-      };
-
-      reserveFilterButtonWidth();
 
       filterButtons.forEach((button) => {
         if (button.dataset.filter !== "all") {

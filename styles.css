@@ -629,33 +629,6 @@ h2 {
 }
 
 
-.work-filter-btn[data-ko] {
-  position: relative;
-  white-space: nowrap;
-}
-
-.work-filter-btn[data-ko]::after {
-  content: attr(data-ko);
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--filter-label-color);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition);
-}
-
-.work-filter-btn[data-ko]:hover,
-.work-filter-btn[data-ko]:focus-visible {
-  color: transparent;
-}
-
-.work-filter-btn[data-ko]:hover::after,
-.work-filter-btn[data-ko]:focus-visible::after {
-  opacity: 1;
-}
-
 .work-filter-btn:hover,
 .work-filter-btn:focus-visible {
   background: rgba(255, 255, 255, 0.14);
