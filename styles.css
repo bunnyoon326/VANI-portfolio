@@ -383,6 +383,11 @@ h2 {
   border-radius: 14px;
 }
 
+.portfolio-lane-item:first-child, 
+.portfolio-lane-blank:first-child{
+  border-radius: 0;
+}
+
 .portfolio-lane-item {
   position: relative;
   overflow: hidden;
