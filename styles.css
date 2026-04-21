@@ -364,13 +364,6 @@ h2 {
   position: relative;
 }
 
-.portfolio-guide {
-  margin: 1rem 0 0;
-  color: var(--muted);
-  font-size: 0.96rem;
-  text-align: left;
-}
-
 .portfolio-lane-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -381,11 +374,6 @@ h2 {
 .portfolio-lane-blank {
   aspect-ratio: 4 / 3;
   border-radius: 14px;
-}
-
-.portfolio-lane-item:first-child, 
-.portfolio-lane-blank:first-child{
-  border-radius: 0;
 }
 
 .portfolio-lane-item {
@@ -409,20 +397,35 @@ h2 {
 }
 
 .lane-heading {
-  align-items: flex-start;
-  justify-content: flex-start;
   padding: 0;
   margin: 0;
-  border: 0;
-  background: transparent;
   font-size: 24px !important;
   font-weight: 300 !important;
   line-height: 1;
 }
 
-.lane-heading:hover {
+.lane-intro {
+  display: block;
+  position: static;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: default;
+}
+
+.lane-intro:hover,
+.lane-intro:focus-visible {
   transform: none;
   background: transparent;
+}
+
+.lane-subtitle {
+  margin: 1rem 0 0;
+  color: #cfd2ff;
+  font-size: 0.96rem;
+  line-height: 1.4;
+  text-align: left;
 }
 
 .lane-card img {
