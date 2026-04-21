@@ -331,12 +331,27 @@ h2 {
 .review-card p {
   color: var(--text);
   line-height: 1.65;
-  margin-top: 0;
+  margin: 0;
 }
 
-.review-card span {
-  color: var(--muted);
-  font-size: 0.9rem;
+.review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.review-tags span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(177, 138, 255, 0.12);
+  border: 1px solid rgba(177, 138, 255, 0.4);
+  color: var(--accent-soft);
+  font-size: 0.82rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .portfolio-grid {
