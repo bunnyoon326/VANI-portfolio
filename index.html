@@ -188,13 +188,13 @@
 
       <section class="contact section" id="contact">
         <div class="container contact-layout">
-          <div class="contact-copy">
-            <h2>CONTACT US</h2>
-            <p>프로젝트 문의를 남겨주시면 빠르게 확인 후 답변드리겠습니다.</p>
-          </div>
           <form class="contact-form" action="#" method="post">
             <div class="contact-form-grid">
-              <div class="contact-fields contact-fields-main">
+              <div class="contact-copy contact-col">
+                <h2>CONTACT US</h2>
+                <p>프로젝트 문의를 남겨주시면 빠르게 확인 후 답변드리겠습니다.</p>
+              </div>
+              <div class="contact-fields contact-col">
                 <label>
                   Name
                   <input type="text" name="name" required />
@@ -208,22 +208,22 @@
                   <input type="email" name="email" required />
                 </label>
               </div>
-              <div class="contact-fields contact-fields-side">
+              <div class="contact-fields contact-col">
                 <label>
                   Message
                   <textarea name="message" rows="5" required></textarea>
                 </label>
-                <div class="contact-actions">
-                  <button type="submit" class="btn">문의하기</button>
-                  <a
-                    class="btn btn-outline"
-                    href="https://open.kakao.com/me/vanistudio"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    role="button"
-                    >카톡으로 문의하기</a
-                  >
-                </div>
+              </div>
+              <div class="contact-actions contact-col">
+                <button type="submit" class="btn">문의하기</button>
+                <a
+                  class="btn btn-outline"
+                  href="https://open.kakao.com/me/vanistudio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  role="button"
+                  >카톡하기</a
+                >
               </div>
             </div>
           </form>
