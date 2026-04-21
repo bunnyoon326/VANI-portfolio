@@ -377,6 +377,8 @@ h2 {
 }
 
 .portfolio-lane-item {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,19 +398,52 @@ h2 {
 
 .lane-heading {
   justify-content: flex-start;
-  padding-left: 1.1rem;
+  padding: 0;
+  margin: 0;
   font-weight: 600;
   cursor: default;
+  border: 0;
+  background: transparent;
 }
 
 .lane-heading:hover {
   transform: none;
-  background: rgba(177, 138, 255, 0.08);
+  background: transparent;
+}
+
+.lane-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition);
+}
+
+.lane-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(8, 6, 13, 0.85), rgba(8, 6, 13, 0.2));
+  color: #fff;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.lane-card:hover img,
+.lane-card:focus-visible img {
+  transform: scale(1.05);
+}
+
+.lane-card:hover .lane-overlay,
+.lane-card:focus-visible .lane-overlay {
+  opacity: 1;
 }
 
 .portfolio-lane-blank {
-  border: 1px dashed rgba(177, 138, 255, 0.6);
-  background: rgba(135, 74, 255, 0.2);
+  border: 0;
+  background: #7c3cff;
   pointer-events: none;
 }
 
@@ -820,6 +855,10 @@ body.detail-page .detail-content {
 
   .portfolio-lane-grid > * {
     height: 88px;
+  }
+
+  .lane-overlay {
+    opacity: 1;
   }
 
   .scroll-indicator {
