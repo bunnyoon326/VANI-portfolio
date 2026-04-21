@@ -368,7 +368,7 @@ h2 {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 0.96rem;
-  text-align: center;
+  text-align: left;
 }
 
 .portfolio-lane-grid {
