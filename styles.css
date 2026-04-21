@@ -406,12 +406,16 @@ h2 {
 
 .lane-intro {
   display: block;
+  position: static;
+  overflow: visible;
   border: 0;
   background: transparent;
   padding: 0;
+  cursor: default;
 }
 
-.lane-intro:hover {
+.lane-intro:hover,
+.lane-intro:focus-visible {
   transform: none;
   background: transparent;
 }
@@ -421,6 +425,7 @@ h2 {
   color: #cfd2ff;
   font-size: 0.96rem;
   line-height: 1.4;
+  text-align: left;
 }
 
 .lane-card img {
