@@ -50,13 +50,15 @@
         <div class="container">
           <div class="work-filter" role="tablist" aria-label="포트폴리오 필터">
             <button class="work-filter-btn active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
-            <button class="work-filter-btn" type="button" data-filter="website" data-en="Website Design" data-ko="웹사이트" role="tab" aria-selected="false">Website</button>
-            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail Page Design" data-ko="상세페이지" role="tab" aria-selected="false">Detail Page</button>
-            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social Media Design" data-ko="SNS 콘텐츠 디자인" role="tab" aria-selected="false">Social</button>
-            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package Design" data-ko="패키지 디자인" role="tab" aria-selected="false">Package</button>
-            <button class="work-filter-btn" type="button" data-filter="print" data-en="Brochure & Flyer Design" data-ko="홍보물 디자인" role="tab" aria-selected="false">Print</button>
-            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="Presentation Design" data-ko="프레젠테이션 디자인" role="tab" aria-selected="false">PPT</button>
-            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial Design" data-ko="책자 디자인" role="tab" aria-selected="false">Editorial</button>
+            <button class="work-filter-btn" type="button" data-filter="website" data-en="Website" data-ko="웹사이트" role="tab" aria-selected="false">Website</button>
+            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail Page" data-ko="상세페이지" role="tab" aria-selected="false">Detail Page</button>
+            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social" data-ko="SNS 콘텐츠 디자인" role="tab" aria-selected="false">Social</button>
+            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package" data-ko="패키지 디자인" role="tab" aria-selected="false">Package</button>
+            <button class="work-filter-btn" type="button" data-filter="card" data-en="Card" data-ko="명함 디자인" role="tab" aria-selected="false">Card</button>
+            <button class="work-filter-btn" type="button" data-filter="banner" data-en="Banner" data-ko="배너 디자인" role="tab" aria-selected="false">Banner</button>
+            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="Presentation" data-ko="프레젠테이션 디자인" role="tab" aria-selected="false">Presentation</button>
+            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial" data-ko="책자 디자인" role="tab" aria-selected="false">Editorial</button>
+            <button class="work-filter-btn" type="button" data-filter="print" data-en="Print" data-ko="홍보물 디자인" role="tab" aria-selected="false">Print</button>
           </div>
 
           <div class="work-gallery-grid" id="workGalleryGrid">
@@ -70,7 +72,7 @@
               <div class="work-card-overlay"></div>
               <h3 class="work-card-title">화장품 상세페이지</h3>
             </article>
-            <article class="work-gallery-card is-visible" data-category="social">
+            <article class="work-gallery-card is-visible" data-category="social card">
               <img src="https://picsum.photos/seed/work-social-01/960/720" alt="SNS 카드뉴스" loading="lazy" />
               <div class="work-card-overlay"></div>
               <h3 class="work-card-title">SNS 카드뉴스</h3>
@@ -100,7 +102,7 @@
               <div class="work-card-overlay"></div>
               <h3 class="work-card-title">반응형 웹사이트 구축</h3>
             </article>
-            <article class="work-gallery-card is-visible" data-category="social">
+            <article class="work-gallery-card is-visible" data-category="social banner">
               <img src="https://picsum.photos/seed/work-social-02/960/720" alt="콘텐츠 배너 시리즈" loading="lazy" />
               <div class="work-card-overlay"></div>
               <h3 class="work-card-title">콘텐츠 배너 시리즈</h3>
@@ -143,7 +145,8 @@
 
       const setFilter = (filter) => {
         galleryCards.forEach((card) => {
-          const matches = filter === "all" || card.dataset.category === filter;
+          const categories = card.dataset.category.split(/\s+/);
+          const matches = filter === "all" || categories.includes(filter);
 
           if (matches) {
             card.style.display = "block";
@@ -160,6 +163,22 @@
             }
           }, 320);
         });
+      };
+
+      const lockButtonWidth = (button) => {
+        const englishLabel = button.dataset.en;
+        const koreanLabel = button.dataset.ko;
+
+        if (!englishLabel || !koreanLabel) return;
+
+        button.textContent = englishLabel;
+        const englishWidth = button.getBoundingClientRect().width;
+
+        button.textContent = koreanLabel;
+        const koreanWidth = button.getBoundingClientRect().width;
+
+        button.textContent = englishLabel;
+        button.style.width = `${Math.ceil(Math.max(englishWidth, koreanWidth))}px`;
       };
 
       filterButtons.forEach((button) => {
