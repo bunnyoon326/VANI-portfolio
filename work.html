@@ -50,15 +50,13 @@
         <div class="container">
           <div class="work-filter" role="tablist" aria-label="포트폴리오 필터">
             <button class="work-filter-btn active" type="button" data-filter="all" role="tab" aria-selected="true">All</button>
-            <button class="work-filter-btn" type="button" data-filter="website" data-en="Website" data-ko="웹사이트" role="tab" aria-selected="false">Website</button>
-            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail Page" data-ko="상세페이지" role="tab" aria-selected="false">Detail Page</button>
-            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social" data-ko="SNS 콘텐츠 디자인" role="tab" aria-selected="false">Social</button>
-            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package" data-ko="패키지 디자인" role="tab" aria-selected="false">Package</button>
-            <button class="work-filter-btn" type="button" data-filter="card" data-en="Card" data-ko="명함 디자인" role="tab" aria-selected="false">Card</button>
-            <button class="work-filter-btn" type="button" data-filter="banner" data-en="Banner" data-ko="배너 디자인" role="tab" aria-selected="false">Banner</button>
-            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="Presentation" data-ko="프레젠테이션 디자인" role="tab" aria-selected="false">Presentation</button>
-            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial" data-ko="책자 디자인" role="tab" aria-selected="false">Editorial</button>
-            <button class="work-filter-btn" type="button" data-filter="print" data-en="Print" data-ko="홍보물 디자인" role="tab" aria-selected="false">Print</button>
+            <button class="work-filter-btn" type="button" data-filter="website" data-en="Website Design" data-ko="웹사이트" role="tab" aria-selected="false">Website</button>
+            <button class="work-filter-btn" type="button" data-filter="detail-page" data-en="Detail Page Design" data-ko="상세페이지" role="tab" aria-selected="false">Detail Page</button>
+            <button class="work-filter-btn" type="button" data-filter="social" data-en="Social Media Design" data-ko="SNS 콘텐츠 디자인" role="tab" aria-selected="false">Social</button>
+            <button class="work-filter-btn" type="button" data-filter="package" data-en="Package Design" data-ko="패키지 디자인" role="tab" aria-selected="false">Package</button>
+            <button class="work-filter-btn" type="button" data-filter="print" data-en="Brochure & Flyer Design" data-ko="홍보물 디자인" role="tab" aria-selected="false">Print</button>
+            <button class="work-filter-btn" type="button" data-filter="ppt" data-en="Presentation Design" data-ko="프레젠테이션 디자인" role="tab" aria-selected="false">PPT</button>
+            <button class="work-filter-btn" type="button" data-filter="editorial" data-en="Editorial Design" data-ko="책자 디자인" role="tab" aria-selected="false">Editorial</button>
           </div>
 
           <div class="work-gallery-grid" id="workGalleryGrid">
@@ -122,11 +120,21 @@
       const galleryCards = document.querySelectorAll(".work-gallery-card");
 
 
+      const categoryTranslations = {
+        website: "웹사이트",
+        "detail-page": "상세페이지",
+        social: "SNS 콘텐츠 디자인",
+        package: "패키지 디자인",
+        print: "홍보물 디자인",
+        ppt: "프레젠테이션 디자인",
+        editorial: "책자 디자인",
+      };
+
       const setButtonLabel = (button, isKorean) => {
         if (button.dataset.filter === "all") return;
 
         const englishLabel = button.dataset.en ?? button.textContent.trim();
-        const koreanLabel = button.dataset.ko;
+        const koreanLabel = button.dataset.ko ?? categoryTranslations[button.dataset.filter];
 
         if (!englishLabel || !koreanLabel) return;
 
@@ -157,8 +165,6 @@
       filterButtons.forEach((button) => {
         if (button.dataset.filter !== "all") {
           setButtonLabel(button, false);
-          const buttonWidth = button.getBoundingClientRect().width;
-          button.style.width = `${buttonWidth}px`;
 
           button.addEventListener("mouseenter", () => setButtonLabel(button, true));
           button.addEventListener("mouseleave", () => setButtonLabel(button, false));
