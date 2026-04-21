@@ -122,27 +122,6 @@
       const galleryCards = document.querySelectorAll(".work-gallery-card");
 
 
-      const categoryTranslations = {
-        website: "웹사이트",
-        "detail-page": "상세페이지",
-        social: "SNS 콘텐츠 디자인",
-        package: "패키지 디자인",
-        print: "홍보물 디자인",
-        ppt: "프레젠테이션 디자인",
-        editorial: "책자 디자인",
-      };
-
-      const setButtonLabel = (button, isKorean) => {
-        if (button.dataset.filter === "all") return;
-
-        const englishLabel = button.dataset.en ?? button.textContent.trim();
-        const koreanLabel = button.dataset.ko ?? categoryTranslations[button.dataset.filter];
-
-        if (!englishLabel || !koreanLabel) return;
-
-        button.textContent = isKorean ? koreanLabel : englishLabel;
-      };
-
       const setFilter = (filter) => {
         galleryCards.forEach((card) => {
           const categories = card.dataset.category.split(/\s+/);
