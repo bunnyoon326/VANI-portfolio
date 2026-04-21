@@ -358,15 +358,21 @@ h2 {
   white-space: nowrap;
 }
 
+.portfolio-lane-shell {
+  --lane-gap: 1rem;
+  --lane-height: 120px;
+  position: relative;
+}
+
 .portfolio-lane-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lane-gap);
 }
 
 .portfolio-lane-item,
 .portfolio-lane-blank {
-  min-height: 120px;
+  height: var(--lane-height);
   border-radius: 14px;
 }
 
@@ -388,56 +394,38 @@ h2 {
   background: rgba(177, 138, 255, 0.2);
 }
 
+.lane-heading {
+  justify-content: flex-start;
+  padding-left: 1.1rem;
+  font-weight: 600;
+  cursor: default;
+}
+
+.lane-heading:hover {
+  transform: none;
+  background: rgba(177, 138, 255, 0.08);
+}
+
 .portfolio-lane-blank {
   border: 1px dashed rgba(177, 138, 255, 0.6);
   background: rgba(135, 74, 255, 0.2);
+  pointer-events: none;
 }
 
-.lane-title {
-  justify-content: flex-end;
-  text-align: right;
-  padding-right: 1rem;
-  font-weight: 600;
+.side-top,
+.side-bottom {
+  position: absolute;
+  width: calc((100% - (var(--lane-gap) * 3)) / 4);
 }
 
-.lane-top:nth-child(1) {
-  grid-column: 2;
+.side-top {
+  top: 0;
+  right: calc(-1 * (((100% - (var(--lane-gap) * 3)) / 4) + var(--lane-gap)));
 }
 
-.lane-top:nth-child(2) {
-  grid-column: 3;
-}
-
-.lane-top:nth-child(3) {
-  grid-column: 4;
-}
-
-.lane-top:nth-child(4) {
-  grid-column: 5;
-}
-
-.lane-top:nth-child(5) {
-  grid-column: 6;
-}
-
-.lane-bottom:nth-child(6) {
-  grid-column: 1;
-}
-
-.lane-bottom:nth-child(7) {
-  grid-column: 2;
-}
-
-.lane-bottom:nth-child(8) {
-  grid-column: 3;
-}
-
-.lane-bottom:nth-child(9) {
-  grid-column: 4;
-}
-
-.lane-bottom:nth-child(10) {
-  grid-column: 5;
+.side-bottom {
+  top: calc(var(--lane-height) + var(--lane-gap));
+  left: calc(-1 * (((100% - (var(--lane-gap) * 3)) / 4) + var(--lane-gap)));
 }
 
 .portfolio-cta-wrap {
@@ -712,8 +700,13 @@ body.detail-page .detail-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .portfolio-lane-grid > * {
-    grid-column: auto !important;
+  .portfolio-lane-shell {
+    --lane-height: 100px;
+  }
+
+  .side-top,
+  .side-bottom {
+    display: none;
   }
 
   .contact-layout {
@@ -826,7 +819,7 @@ body.detail-page .detail-content {
   }
 
   .portfolio-lane-grid > * {
-    min-height: 88px;
+    height: 88px;
   }
 
   .scroll-indicator {
