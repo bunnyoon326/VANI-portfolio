@@ -121,6 +121,7 @@ img {
 
 h2 {
   margin: 0 0 1.6rem;
+  font-size: 24px;
   font-weight: 300;
   letter-spacing: 0.02em;
 }
@@ -360,7 +361,6 @@ h2 {
 
 .portfolio-lane-shell {
   --lane-gap: 1rem;
-  --lane-height: 120px;
   position: relative;
 }
 
@@ -372,7 +372,7 @@ h2 {
 
 .portfolio-lane-item,
 .portfolio-lane-blank {
-  height: var(--lane-height);
+  aspect-ratio: 4 / 3;
   border-radius: 14px;
 }
 
@@ -432,11 +432,12 @@ h2 {
 }
 
 .lane-card:hover img,
-.lane-card:focus-visible img {
+.lane-card:focus-within img {
   transform: scale(1.05);
 }
 
 .lane-card:hover .lane-overlay,
+.lane-card:focus-within .lane-overlay,
 .lane-card:focus-visible .lane-overlay {
   opacity: 1;
 }
@@ -459,7 +460,7 @@ h2 {
 }
 
 .side-bottom {
-  top: calc(var(--lane-height) + var(--lane-gap));
+  bottom: 0;
   left: calc(-1 * (((100% - (var(--lane-gap) * 3)) / 4) + var(--lane-gap)));
 }
 
@@ -735,10 +736,6 @@ body.detail-page .detail-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .portfolio-lane-shell {
-    --lane-height: 100px;
-  }
-
   .side-top,
   .side-bottom {
     display: none;
@@ -851,10 +848,6 @@ body.detail-page .detail-content {
 
   .portfolio-lane-grid {
     grid-template-columns: 1fr;
-  }
-
-  .portfolio-lane-grid > * {
-    height: 88px;
   }
 
   .lane-overlay {
