@@ -122,12 +122,19 @@
       const galleryCards = document.querySelectorAll(".work-gallery-card");
 
 
+      const hideTimers = new WeakMap();
+
       const setFilter = (filter) => {
         galleryCards.forEach((card) => {
           const categories = card.dataset.category.split(/\s+/);
           const matches = filter === "all" || categories.includes(filter);
 
           if (matches) {
+            const timerId = hideTimers.get(card);
+            if (timerId) {
+              clearTimeout(timerId);
+              hideTimers.delete(card);
+            }
             card.style.display = "block";
             card.classList.remove("is-hidden");
             requestAnimationFrame(() => card.classList.add("is-visible"));
@@ -136,29 +143,49 @@
 
           card.classList.remove("is-visible");
           card.classList.add("is-hidden");
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             if (card.classList.contains("is-hidden")) {
               card.style.display = "none";
             }
           }, 320);
+          hideTimers.set(card, timeoutId);
         });
       };
 
-      const lockButtonWidth = (button) => {
-        const englishLabel = button.dataset.en;
-        const koreanLabel = button.dataset.ko;
+      const reserveFilterButtonWidth = () => {
+        const ruler = document.createElement("span");
+        ruler.style.position = "absolute";
+        ruler.style.visibility = "hidden";
+        ruler.style.whiteSpace = "nowrap";
+        ruler.style.pointerEvents = "none";
+        ruler.style.inset = "-9999px auto auto -9999px";
+        document.body.appendChild(ruler);
 
-        if (!englishLabel || !koreanLabel) return;
+        filterButtons.forEach((button) => {
+          const koLabel = button.dataset.ko;
+          if (!koLabel) return;
 
-        button.textContent = englishLabel;
-        const englishWidth = button.getBoundingClientRect().width;
+          const enLabel = button.dataset.en || button.textContent.trim();
+          const computed = window.getComputedStyle(button);
+          ruler.style.font = computed.font;
+          ruler.style.letterSpacing = computed.letterSpacing;
 
-        button.textContent = koreanLabel;
-        const koreanWidth = button.getBoundingClientRect().width;
+          ruler.textContent = enLabel;
+          const enWidth = ruler.getBoundingClientRect().width;
+          ruler.textContent = koLabel;
+          const koWidth = ruler.getBoundingClientRect().width;
 
-        button.textContent = englishLabel;
-        button.style.width = `${Math.ceil(Math.max(englishWidth, koreanWidth))}px`;
+          const paddingX = parseFloat(computed.paddingLeft) + parseFloat(computed.paddingRight);
+          const borderX = parseFloat(computed.borderLeftWidth) + parseFloat(computed.borderRightWidth);
+          const reservedWidth = Math.ceil(Math.max(enWidth, koWidth) + paddingX + borderX);
+
+          button.style.width = `${reservedWidth}px`;
+        });
+
+        ruler.remove();
       };
+
+      reserveFilterButtonWidth();
 
       filterButtons.forEach((button) => {
         if (button.dataset.filter !== "all") {
