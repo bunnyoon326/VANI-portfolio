@@ -39,9 +39,9 @@ if (heroFrame && heroOrbs.length) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
   const orbConfig = [
-    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 180, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
-    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 155, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
-    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 132, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
+    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 320, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
+    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 290, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
+    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 260, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
   ];
 
   const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
@@ -72,7 +72,10 @@ if (heroFrame && heroOrbs.length) {
 
   window.addEventListener('pointermove', (event) => onPointer(event.clientX, event.clientY), { passive: true });
   window.addEventListener('pointerdown', (event) => onPointer(event.clientX, event.clientY), { passive: true });
-  window.addEventListener('pointerleave', () => {
+  heroFrame.addEventListener('pointerenter', () => {
+    mouse.active = true;
+  });
+  heroFrame.addEventListener('pointerleave', () => {
     mouse.active = false;
   });
 
@@ -108,7 +111,7 @@ if (heroFrame && heroOrbs.length) {
         mouse.y >= frameRect.top &&
         mouse.y <= frameRect.top + frameRect.height;
 
-      if (mouse.active && pointerInFrame && !reduceMotion) {
+      if ((mouse.active || pointerInFrame) && pointerInFrame && !reduceMotion) {
         const orbScreenX = frameRect.left + orb.x;
         const orbScreenY = frameRect.top + orb.y;
         const dx = orbScreenX - mouse.x;
@@ -120,7 +123,7 @@ if (heroFrame && heroOrbs.length) {
           const easing = ratio * ratio * (3 - 2 * ratio);
           const unitX = dx / (distance || 1);
           const unitY = dy / (distance || 1);
-          const force = 2.2 * easing;
+          const force = 2.9 * easing;
           repelX = unitX * force;
           repelY = unitY * force;
         }
@@ -168,7 +171,6 @@ if (heroMarqueeGroupA && heroMarqueeGroupB) {
   const starSvg = `
     <svg class="hero-marquee-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       <path d="M12 2.8L13.8 8.2L19.2 10L13.8 11.8L12 17.2L10.2 11.8L4.8 10L10.2 8.2L12 2.8Z" fill="currentColor"/>
-      <path d="M18.8 14.2L19.6 16.4L21.8 17.2L19.6 18L18.8 20.2L18 18L15.8 17.2L18 16.4L18.8 14.2Z" fill="currentColor" opacity="0.9"/>
     </svg>`;
 
   const marqueeHtml = sentences
