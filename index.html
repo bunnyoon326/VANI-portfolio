@@ -68,29 +68,31 @@
 
     <main>
       <section class="hero section" id="top" aria-labelledby="hero-title">
-        <div class="container hero-inner">
-          <div class="hero-frame" id="heroFrame">
-            <div class="hero-orbs" aria-hidden="true">
-              <span class="hero-orb hero-orb-1"></span>
-              <span class="hero-orb hero-orb-2"></span>
-              <span class="hero-orb hero-orb-3"></span>
-            </div>
-            <div class="hero-copy">
-              <p class="hero-kicker">A designer who understands needs<br />and turns them into results.</p>
-              <h1 id="hero-title">바른 디자인,<br />니즈를 아는 디자인.</h1>
-            </div>
+        <div class="container hero-inner" id="heroFrame">
+          <div class="hero-orbs" aria-hidden="true">
+            <span class="hero-orb hero-orb-1"></span>
+            <span class="hero-orb hero-orb-2"></span>
+            <span class="hero-orb hero-orb-3"></span>
           </div>
+          <div class="hero-copy">
+            <p class="hero-kicker">A designer who understands needs<br />and turns them into results.</p>
+            <h1 id="hero-title">바른 디자인,<br />니즈를 아는 디자인.</h1>
+          </div>
+          <div class="hero-marquee-wrap" aria-hidden="true">
+            <section class="hero-marquee">
+              <div class="hero-marquee-track" id="heroMarqueeTrack">
+                <div class="hero-marquee-group" id="heroMarqueeGroupA"></div>
+                <div class="hero-marquee-group" id="heroMarqueeGroupB"></div>
+              </div>
+            </section>
+          </div>
+          <a class="hero-scroll-indicator" href="#about" aria-label="아래 섹션으로 이동">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
         </div>
       </section>
-
-      <div class="hero-marquee-wrap" aria-hidden="true">
-        <section class="hero-marquee">
-          <div class="hero-marquee-track" id="heroMarqueeTrack">
-            <div class="hero-marquee-group" id="heroMarqueeGroupA"></div>
-            <div class="hero-marquee-group" id="heroMarqueeGroupB"></div>
-          </div>
-        </section>
-      </div>
 
       <section class="about section" id="about">
         <div class="container narrow">
