@@ -37,9 +37,9 @@ const heroOrbs = document.querySelectorAll('.hero-orb');
 if (heroFrame && heroOrbs.length) {
   const mouse = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.25, active: false };
   const orbConfig = [
-    { baseX: 0.24, baseY: 0.18, driftX: 42, driftY: 24, speed: 0.00034, phase: 1.2, repel: 130, bobAmp: 6.4, bobFreq: 0.0016, elast: 0.065 },
-    { baseX: 0.56, baseY: 0.14, driftX: 32, driftY: 18, speed: 0.00042, phase: 3.5, repel: 105, bobAmp: 5.2, bobFreq: 0.0019, elast: 0.072 },
-    { baseX: 0.77, baseY: 0.2, driftX: 24, driftY: 16, speed: 0.00051, phase: 5.4, repel: 88, bobAmp: 4.4, bobFreq: 0.0022, elast: 0.078 },
+    { baseX: 0.28, baseY: 0.24, driftX: 24, driftY: 14, speed: 0.00025, phase: 1.2, repel: 135, bobAmp: 5.2, bobFreq: 0.0014, elast: 0.06 },
+    { baseX: 0.92, baseY: 0.24, driftX: 18, driftY: 10, speed: 0.00029, phase: 3.5, repel: 105, bobAmp: 4.3, bobFreq: 0.0017, elast: 0.068 },
+    { baseX: 0.44, baseY: 0.1, driftX: 15, driftY: 9, speed: 0.00033, phase: 5.4, repel: 88, bobAmp: 3.8, bobFreq: 0.002, elast: 0.075 },
   ];
 
   const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
