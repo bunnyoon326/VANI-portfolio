@@ -242,8 +242,8 @@ h2 {
   place-items: center;
   position: relative;
   padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(4rem, 6vw, 5rem);
-  overflow: visible;
-  background: #24262c;
+  overflow: hidden;
+  background: linear-gradient(180deg, #22242a 0%, #1f2127 100%);
 }
 
 .hero-inner {
@@ -275,9 +275,9 @@ h2 {
   border-radius: 50%;
   will-change: transform;
   background: radial-gradient(circle at 50% 50%, rgba(113, 96, 161, 0.62), rgba(83, 71, 119, 0.5) 70%, rgba(69, 59, 98, 0.4));
-  filter: saturate(105%);
+  filter: saturate(102%) blur(0.3px);
   transform: translate3d(0, 0, 0);
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .hero-orb::before {
@@ -307,14 +307,14 @@ h2 {
   width: clamp(340px, 40vw, 640px);
   height: clamp(340px, 40vw, 640px);
   box-shadow: none;
-  opacity: 0.82;
+  opacity: 0.74;
 }
 
 .hero-orb-3 {
   width: clamp(240px, 28vw, 460px);
   height: clamp(240px, 28vw, 460px);
   box-shadow: none;
-  opacity: 0.86;
+  opacity: 0.78;
 }
 
 .hero-copy {
@@ -332,6 +332,9 @@ h2 {
   letter-spacing: 0.08em;
   color: rgba(214, 204, 242, 0.86);
   font-weight: 300;
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  animation: heroFadeUp 0.95s cubic-bezier(0.2, 0.75, 0.2, 1) 0.15s forwards;
 }
 
 .hero h1 {
@@ -342,6 +345,9 @@ h2 {
   letter-spacing: -0.01em;
   text-align: right;
   font-weight: 700;
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  animation: heroFadeUp 1s cubic-bezier(0.2, 0.75, 0.2, 1) 0.4s forwards;
 }
 
 .hero-description {
@@ -352,13 +358,17 @@ h2 {
 }
 
 .hero-marquee-wrap {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  bottom: clamp(-1.7rem, -3vw, -2.2rem);
   z-index: 20;
-  margin-top: clamp(-2.8rem, -5vw, -3.8rem);
-  margin-bottom: clamp(-1.4rem, -2.4vw, -1.9rem);
+  width: min(1260px, 126%);
+  transform: translateX(-50%) translateY(24px);
   display: flex;
   justify-content: center;
   pointer-events: none;
+  opacity: 0;
+  animation: heroFadeUp 0.95s cubic-bezier(0.2, 0.75, 0.2, 1) 0.7s forwards;
 }
 
 .hero-marquee {
@@ -412,6 +422,17 @@ h2 {
 @keyframes heroMarqueeScroll {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .about p {
@@ -872,6 +893,10 @@ body.detail-page .detail-content {
     transform: rotate(-3.4deg);
   }
 
+  .hero-marquee-wrap {
+    bottom: -1.45rem;
+  }
+
   .portfolio-lane-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1002,9 +1027,13 @@ body.detail-page .detail-content {
   }
 
   .hero-marquee {
-    width: 132vw;
+    width: 146vw;
     border-radius: 26px;
     transform: rotate(-3deg);
+  }
+
+  .hero-marquee-wrap {
+    bottom: -1.2rem;
   }
 
   .portfolio-lane-grid {

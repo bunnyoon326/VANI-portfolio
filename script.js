@@ -36,10 +36,12 @@ const heroOrbs = document.querySelectorAll('.hero-orb');
 
 if (heroFrame && heroOrbs.length) {
   const mouse = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.25, active: false };
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
   const orbConfig = [
-    { baseX: 0.28, baseY: 0.24, driftX: 24, driftY: 14, speed: 0.00025, phase: 1.2, repel: 135, bobAmp: 5.2, bobFreq: 0.0014, elast: 0.06 },
-    { baseX: 0.92, baseY: 0.24, driftX: 18, driftY: 10, speed: 0.00029, phase: 3.5, repel: 105, bobAmp: 4.3, bobFreq: 0.0017, elast: 0.068 },
-    { baseX: 0.44, baseY: 0.1, driftX: 15, driftY: 9, speed: 0.00033, phase: 5.4, repel: 88, bobAmp: 3.8, bobFreq: 0.002, elast: 0.075 },
+    { baseX: 0.26, baseY: 0.24, driftX: 22, driftY: 13, speed: 0.0002, phase: 1.2, repel: 150, bobAmp: 4.4, bobFreq: 0.0012, elast: 0.052 },
+    { baseX: 0.9, baseY: 0.24, driftX: 16, driftY: 9, speed: 0.00024, phase: 3.5, repel: 118, bobAmp: 3.9, bobFreq: 0.0014, elast: 0.058 },
+    { baseX: 0.42, baseY: 0.11, driftX: 12, driftY: 8, speed: 0.00028, phase: 5.4, repel: 96, bobAmp: 3.2, bobFreq: 0.0016, elast: 0.064 },
   ];
 
   const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
@@ -85,6 +87,7 @@ if (heroFrame && heroOrbs.length) {
 
     state.forEach((orb, index) => {
       const config = orb.cfg;
+      const mobileMultiplier = isMobile() ? 0.6 : 1;
       const driftX =
         Math.sin(now * config.speed + config.phase) * config.driftX +
         Math.sin(now * config.speed * 0.63 + config.phase * 1.9) * config.driftX * 0.42;
@@ -93,13 +96,19 @@ if (heroFrame && heroOrbs.length) {
         Math.sin(now * config.speed * 0.37 + config.phase * 2.1) * config.driftY * 0.46;
       const bob = Math.sin(now * config.bobFreq + config.phase * 1.5) * config.bobAmp;
 
-      const homeX = frameRect.width * config.baseX + driftX;
-      const homeY = frameRect.height * config.baseY + driftY + bob;
+      const homeX = frameRect.width * config.baseX + driftX * mobileMultiplier;
+      const homeY = frameRect.height * config.baseY + (driftY + bob) * mobileMultiplier;
 
       let repelX = 0;
       let repelY = 0;
 
-      if (mouse.active) {
+      const pointerInFrame =
+        mouse.x >= frameRect.left &&
+        mouse.x <= frameRect.left + frameRect.width &&
+        mouse.y >= frameRect.top &&
+        mouse.y <= frameRect.top + frameRect.height;
+
+      if (mouse.active && pointerInFrame && !reduceMotion) {
         const orbScreenX = frameRect.left + orb.x;
         const orbScreenY = frameRect.top + orb.y;
         const dx = orbScreenX - mouse.x;
@@ -111,7 +120,7 @@ if (heroFrame && heroOrbs.length) {
           const easing = ratio * ratio * (3 - 2 * ratio);
           const unitX = dx / (distance || 1);
           const unitY = dy / (distance || 1);
-          const force = 2.4 * easing;
+          const force = 2 * easing;
           repelX = unitX * force;
           repelY = unitY * force;
         }
@@ -120,15 +129,15 @@ if (heroFrame && heroOrbs.length) {
       const springX = (homeX - orb.x) * config.elast;
       const springY = (homeY - orb.y) * config.elast;
 
-      orb.vx = (orb.vx + springX + repelX) * 0.92;
-      orb.vy = (orb.vy + springY + repelY) * 0.92;
+      orb.vx = (orb.vx + springX + repelX) * 0.9;
+      orb.vy = (orb.vy + springY + repelY) * 0.9;
 
       orb.x += orb.vx * dt;
       orb.y += orb.vy * dt;
 
-      const maxPad = 28;
+      const maxPad = 18;
       orb.x = clamp(orb.x, -maxPad, frameRect.width + maxPad);
-      orb.y = clamp(orb.y, -maxPad, frameRect.height * 0.56);
+      orb.y = clamp(orb.y, -maxPad, frameRect.height * 0.58);
 
       const pulse = 1 + Math.sin(now * config.bobFreq * 0.9 + config.phase) * 0.018;
       orb.scale += (pulse - orb.scale) * 0.08;
