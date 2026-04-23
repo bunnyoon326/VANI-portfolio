@@ -70,8 +70,11 @@ if (heroFrame && heroOrbs.length) {
     mouse.active = true;
   };
 
-  heroFrame.addEventListener('pointermove', (event) => onPointer(event.clientX, event.clientY), { passive: true });
-  heroFrame.addEventListener('pointerdown', (event) => onPointer(event.clientX, event.clientY), { passive: true });
+  window.addEventListener('pointermove', (event) => onPointer(event.clientX, event.clientY), { passive: true });
+  window.addEventListener('pointerdown', (event) => onPointer(event.clientX, event.clientY), { passive: true });
+  heroFrame.addEventListener('pointerenter', () => {
+    mouse.active = true;
+  });
   heroFrame.addEventListener('pointerleave', () => {
     mouse.active = false;
   });
@@ -108,7 +111,7 @@ if (heroFrame && heroOrbs.length) {
         mouse.y >= frameRect.top &&
         mouse.y <= frameRect.top + frameRect.height;
 
-      if (mouse.active && pointerInFrame && !reduceMotion) {
+      if ((mouse.active || pointerInFrame) && pointerInFrame && !reduceMotion) {
         const orbScreenX = frameRect.left + orb.x;
         const orbScreenY = frameRect.top + orb.y;
         const dx = orbScreenX - mouse.x;
@@ -168,7 +171,6 @@ if (heroMarqueeGroupA && heroMarqueeGroupB) {
   const starSvg = `
     <svg class="hero-marquee-star" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       <path d="M12 2.8L13.8 8.2L19.2 10L13.8 11.8L12 17.2L10.2 11.8L4.8 10L10.2 8.2L12 2.8Z" fill="currentColor"/>
-      <path d="M18.8 14.2L19.6 16.4L21.8 17.2L19.6 18L18.8 20.2L18 18L15.8 17.2L18 16.4L18.8 14.2Z" fill="currentColor" opacity="0.9"/>
     </svg>`;
 
   const marqueeHtml = sentences
