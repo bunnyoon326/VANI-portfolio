@@ -1039,6 +1039,10 @@ body.detail-page .detail-content {
     bottom: 4.6rem;
   }
 
+  .hero-scroll-indicator {
+    bottom: 4.6rem;
+  }
+
   .portfolio-lane-grid {
     grid-template-columns: 1fr;
   }
