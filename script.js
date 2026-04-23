@@ -39,9 +39,9 @@ if (heroFrame && heroOrbs.length) {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
   const orbConfig = [
-    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 320, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
-    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 290, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
-    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 260, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
+    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 460, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
+    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 420, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
+    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 380, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
   ];
 
   const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
@@ -76,6 +76,9 @@ if (heroFrame && heroOrbs.length) {
     mouse.active = true;
   });
   heroFrame.addEventListener('pointerleave', () => {
+    mouse.active = false;
+  });
+  window.addEventListener('pointerleave', () => {
     mouse.active = false;
   });
 
@@ -118,12 +121,15 @@ if (heroFrame && heroOrbs.length) {
         const dy = orbScreenY - mouse.y;
         const distance = Math.hypot(dx, dy);
 
-        if (distance < config.repel) {
-          const ratio = (config.repel - distance) / config.repel;
+        const orbSize = heroOrbs[index].offsetWidth || 300;
+        const influenceRadius = Math.max(config.repel, orbSize * 0.75);
+
+        if (distance < influenceRadius) {
+          const ratio = (influenceRadius - distance) / influenceRadius;
           const easing = ratio * ratio * (3 - 2 * ratio);
           const unitX = dx / (distance || 1);
           const unitY = dy / (distance || 1);
-          const force = 2.9 * easing;
+          const force = 6.2 * easing;
           repelX = unitX * force;
           repelY = unitY * force;
         }

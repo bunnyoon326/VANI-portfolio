@@ -337,11 +337,12 @@ h2 {
   z-index: 980;
   width: 100%;
   margin-top: clamp(-2rem, -3.2vw, -2.4rem);
-  margin-bottom: clamp(-0.8rem, -1.4vw, -0.45rem);
+  margin-bottom: clamp(72px, 8vw, 116px);
   transform: translateY(24px);
   display: flex;
   justify-content: center;
   pointer-events: none;
+  overflow: hidden;
   opacity: 0;
   animation: heroFadeUp 0.95s cubic-bezier(0.2, 0.75, 0.2, 1) 0.7s forwards;
 }
@@ -352,8 +353,8 @@ h2 {
   bottom: clamp(1.6rem, 3vw, 2.2rem);
   transform: translateX(-50%);
   z-index: 40;
-  min-width: 80px;
-  height: 56px;
+  width: 100px;
+  height: 100px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -362,12 +363,13 @@ h2 {
 }
 
 .hero-scroll-indicator svg {
-  width: 34px;
-  height: 34px;
+  width: 56px;
+  height: 56px;
 }
 
 .hero-marquee {
-  width: min(120vw, 1600px);
+  width: calc(100% + 280px);
+  margin-inline: -140px;
   height: clamp(50px, 6vw, 68px);
   border-radius: 0;
   transform: rotate(-4.2deg);
@@ -407,8 +409,8 @@ h2 {
 }
 
 .hero-marquee-star {
-  width: 1em;
-  height: 1em;
+  width: 2.2em;
+  height: 2.2em;
   flex: 0 0 auto;
   opacity: 0.96;
   filter: none;
@@ -894,7 +896,8 @@ body.detail-page .detail-content {
   }
 
   .hero-marquee-wrap {
-    margin-top: -1.5rem;
+    margin-top: -1.4rem;
+    margin-bottom: clamp(72px, 10vw, 108px);
   }
 
   .portfolio-lane-grid {
@@ -1026,17 +1029,15 @@ body.detail-page .detail-content {
   }
 
   .hero-marquee {
-    width: 146vw;
-    border-radius: 26px;
+    width: calc(100% + 180px);
+    margin-inline: -90px;
+    border-radius: 0;
     transform: rotate(-3deg);
   }
 
   .hero-marquee-wrap {
-    margin-top: -1.1rem;
-  }
-
-  .hero-scroll-indicator {
-    bottom: 4.6rem;
+    margin-top: -1rem;
+    margin-bottom: 92px;
   }
 
   .hero-scroll-indicator {
