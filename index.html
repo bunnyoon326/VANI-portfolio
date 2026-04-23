@@ -67,26 +67,31 @@
     </header>
 
     <main>
-      <section class="hero section" id="top">
-        <div class="hero-blob-layer" aria-hidden="true">
-          <span class="hero-blob ring ring-main"></span>
-          <span class="hero-blob ring ring-outer"></span>
-          <span class="hero-blob ring ring-inner"></span>
-          <span class="hero-blob ring ring-core"></span>
-          <span class="hero-blob ring ring-accent"></span>
-          <span class="hero-blob ring ring-left"></span>
-        </div>
-        <div class="hero-dim" aria-hidden="true"></div>
+      <section class="hero section" id="top" aria-labelledby="hero-title">
         <div class="container hero-inner">
-          <div class="hero-copy">
-            <p class="hero-kicker">A designer who understands needs<br />and turns them into results.</p>
-            <h1>바른 디자인,<br />니즈를 아는 디자인.</h1>
+          <div class="hero-frame" id="heroFrame">
+            <div class="hero-orbs" aria-hidden="true">
+              <span class="hero-orb hero-orb-1"></span>
+              <span class="hero-orb hero-orb-2"></span>
+              <span class="hero-orb hero-orb-3"></span>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-kicker">PORTFOLIO</p>
+              <h1 id="hero-title">감각을 넘어, 목적이 선명한 디자인을 만듭니다.</h1>
+              <p class="hero-description">조용한 톤, 단단한 구조, 그리고 섬세한 상호작용으로 사용자의 흐름을 부드럽게 연결합니다.</p>
+            </div>
           </div>
         </div>
-        <a class="scroll-indicator" href="#about" aria-label="다음 섹션으로 이동">
-          <span class="scroll-arrow" aria-hidden="true"></span>
-        </a>
       </section>
+
+      <div class="hero-marquee-wrap" aria-hidden="true">
+        <section class="hero-marquee">
+          <div class="hero-marquee-track" id="heroMarqueeTrack">
+            <div class="hero-marquee-group" id="heroMarqueeGroupA"></div>
+            <div class="hero-marquee-group" id="heroMarqueeGroupB"></div>
+          </div>
+        </section>
+      </div>
 
       <section class="about section" id="about">
         <div class="container narrow">
