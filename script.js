@@ -35,114 +35,69 @@ const hero = document.querySelector('.hero');
 const blobNodes = document.querySelectorAll('.hero-blob');
 
 if (hero && blobNodes.length) {
-  const heroState = {
-    pointerX: window.innerWidth * 0.5,
-    pointerY: window.innerHeight * 0.5,
-    pointerActive: false,
-    bounds: hero.getBoundingClientRect(),
+  const ringLayouts = [
+    { x: 58, y: -8, depth: 0.24, driftX: 12, driftY: 10, speed: 0.00022 },
+    { x: 60, y: -2, depth: 0.2, driftX: 10, driftY: 9, speed: 0.0002 },
+    { x: 62, y: 5, depth: 0.16, driftX: 8, driftY: 7, speed: 0.00018 },
+    { x: 64, y: 11, depth: 0.12, driftX: 6, driftY: 6, speed: 0.00016 },
+    { x: 55, y: -16, depth: 0.08, driftX: 14, driftY: 11, speed: 0.00015 },
+    { x: -20, y: 63, depth: 0.1, driftX: 10, driftY: 8, speed: 0.00017 },
+  ];
+
+  const state = {
+    pointerX: 0,
+    pointerY: 0,
+    targetX: 0,
+    targetY: 0,
+    hasPointer: false,
   };
 
-  const createBlobState = (index) => {
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 110 + Math.random() * 340;
-    const offsetX = Math.cos(angle) * distance;
-    const offsetY = Math.sin(angle) * (70 + Math.random() * 240);
+  const rings = Array.from(blobNodes).map((node, index) => ({
+    node,
+    ...ringLayouts[index],
+    phase: Math.random() * Math.PI * 2,
+  }));
 
-    return {
-      node: blobNodes[index],
-      baseX: offsetX,
-      baseY: offsetY,
-      driftPhaseX: Math.random() * Math.PI * 2,
-      driftPhaseY: Math.random() * Math.PI * 2,
-      breathPhase: Math.random() * Math.PI * 2,
-      driftSpeedX: 0.00014 + Math.random() * 0.00022,
-      driftSpeedY: 0.00012 + Math.random() * 0.0002,
-      breathSpeed: 0.001 + Math.random() * 0.0012,
-      driftAmpX: 28 + Math.random() * 38,
-      driftAmpY: 28 + Math.random() * 42,
-      breathAmp: 0.03 + Math.random() * 0.02,
-      repelX: 0,
-      repelY: 0,
-      velocityX: 0,
-      velocityY: 0,
-    };
+  const setIdleTarget = () => {
+    state.targetX = 0;
+    state.targetY = 0;
   };
 
-  const blobs = Array.from(blobNodes).map((_, index) => createBlobState(index));
-  const repelRadius = 300;
-  const strength = 24;
-  let rafId = 0;
+  hero.addEventListener('pointermove', (event) => {
+    const bounds = hero.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    state.targetX = x * 48;
+    state.targetY = y * 42;
+    state.hasPointer = true;
+  });
 
-  const easeInOutSine = (value) => 0.5 - 0.5 * Math.cos(Math.PI * value);
-
-  const updateBounds = () => {
-    heroState.bounds = hero.getBoundingClientRect();
-  };
-
-  const onPointerMove = (event) => {
-    heroState.pointerX = event.clientX;
-    heroState.pointerY = event.clientY;
-    heroState.pointerActive = true;
-  };
-
-  const onPointerLeave = () => {
-    heroState.pointerActive = false;
-  };
-
-  hero.addEventListener('pointermove', onPointerMove);
-  hero.addEventListener('pointerleave', onPointerLeave);
-  window.addEventListener('resize', updateBounds);
-  window.addEventListener('scroll', updateBounds, { passive: true });
+  hero.addEventListener('pointerleave', () => {
+    state.hasPointer = false;
+    setIdleTarget();
+  });
 
   const animate = (time) => {
-    const centerX = heroState.bounds.left + heroState.bounds.width * 0.5;
-    const centerY = heroState.bounds.top + heroState.bounds.height * 0.5;
+    state.pointerX += (state.targetX - state.pointerX) * 0.08;
+    state.pointerY += (state.targetY - state.pointerY) * 0.08;
 
-    blobs.forEach((blob) => {
-      blob.driftPhaseX += blob.driftSpeedX * 16.67;
-      blob.driftPhaseY += blob.driftSpeedY * 16.67;
-      blob.breathPhase += blob.breathSpeed * 16.67;
+    rings.forEach((ring) => {
+      const driftX = Math.sin(time * ring.speed + ring.phase) * ring.driftX;
+      const driftY = Math.cos(time * ring.speed + ring.phase) * ring.driftY;
+      const followX = state.pointerX * ring.depth;
+      const followY = state.pointerY * ring.depth;
+      const breathing = 1 + Math.sin(time * (ring.speed * 1.8) + ring.phase) * 0.008;
+      const x = `calc(${ring.x}% + ${driftX + followX}px)`;
+      const y = `calc(${ring.y}% + ${driftY + followY}px)`;
 
-      const driftX = Math.sin(time * blob.driftSpeedX + blob.driftPhaseX) * blob.driftAmpX;
-      const driftY = Math.cos(time * blob.driftSpeedY + blob.driftPhaseY) * blob.driftAmpY;
-
-      const worldX = centerX + blob.baseX + driftX + blob.repelX;
-      const worldY = centerY + blob.baseY + driftY + blob.repelY;
-
-      if (heroState.pointerActive) {
-        const deltaX = worldX - heroState.pointerX;
-        const deltaY = worldY - heroState.pointerY;
-        const distance = Math.hypot(deltaX, deltaY);
-
-        if (distance < repelRadius) {
-          const force = (1 - distance / repelRadius) ** 2;
-          const directionX = deltaX / (distance || 1);
-          const directionY = deltaY / (distance || 1);
-          blob.velocityX += directionX * force * strength * 0.1;
-          blob.velocityY += directionY * force * strength * 0.1;
-        }
-      }
-
-      blob.velocityX *= 0.9;
-      blob.velocityY *= 0.9;
-      blob.repelX = (blob.repelX + blob.velocityX) * 0.94;
-      blob.repelY = (blob.repelY + blob.velocityY) * 0.94;
-
-      const breathCycle = (Math.sin(time * blob.breathSpeed + blob.breathPhase) + 1) * 0.5;
-      const easedBreath = easeInOutSine(breathCycle);
-      const scale = 0.95 + easedBreath * (blob.breathAmp * 2);
-      const x = blob.baseX + driftX + blob.repelX;
-      const y = blob.baseY + driftY + blob.repelY;
-
-      blob.node.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale.toFixed(4)})`;
+      ring.node.style.left = x;
+      ring.node.style.top = y;
+      ring.node.style.transform = `translate(-50%, -50%) scale(${breathing.toFixed(4)})`;
     });
 
-    rafId = window.requestAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
   };
 
-  rafId = window.requestAnimationFrame(animate);
-
-  window.addEventListener('beforeunload', () => {
-    window.cancelAnimationFrame(rafId);
-  });
+  setIdleTarget();
+  window.requestAnimationFrame(animate);
 }
