@@ -72,6 +72,7 @@ if (heroFrame && heroOrbs.length) {
 
   window.addEventListener('pointermove', (event) => onPointer(event.clientX, event.clientY), { passive: true });
   window.addEventListener('pointerdown', (event) => onPointer(event.clientX, event.clientY), { passive: true });
+  window.addEventListener('mousemove', (event) => onPointer(event.clientX, event.clientY), { passive: true });
   heroFrame.addEventListener('pointerenter', () => {
     mouse.active = true;
   });
@@ -114,7 +115,7 @@ if (heroFrame && heroOrbs.length) {
         mouse.y >= frameRect.top &&
         mouse.y <= frameRect.top + frameRect.height;
 
-      if ((mouse.active || pointerInFrame) && pointerInFrame && !reduceMotion) {
+      if ((mouse.active || pointerInFrame) && pointerInFrame) {
         const orbScreenX = frameRect.left + orb.x;
         const orbScreenY = frameRect.top + orb.y;
         const dx = orbScreenX - mouse.x;
@@ -129,7 +130,8 @@ if (heroFrame && heroOrbs.length) {
           const easing = ratio * ratio * (3 - 2 * ratio);
           const unitX = dx / (distance || 1);
           const unitY = dy / (distance || 1);
-          const force = 6.2 * easing;
+          const reduceMotionFactor = reduceMotion ? 0.45 : 1;
+          const force = 6.2 * easing * reduceMotionFactor;
           repelX = unitX * force;
           repelY = unitY * force;
         }
