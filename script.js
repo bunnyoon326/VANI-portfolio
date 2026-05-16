@@ -1,7 +1,41 @@
-const menuButton = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
+const headerTemplate = `
+<header class="site-header">
+  <div class="container header-inner">
+    <nav class="nav nav-left" aria-label="주요 메뉴">
+      <a href="about.html" data-page="about.html">ABOUT</a>
+      <a href="work.html" data-page="work.html">WORK</a>
+      <a href="contact.html" data-page="contact.html">CONTACT</a>
+    </nav>
+    <a class="logo logo-placeholder" href="index.html" aria-label="VANI 로고">
+      <img class="logo-image" src="img/logo.svg" alt="VANI 로고" />
+    </a>
+    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
+    <div class="header-social" aria-label="소셜 링크">
+      <a class="social-link" href="https://www.instagram.com/vani.studio.kr/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램">
+        <img src="img/header_instagram.svg" alt="" aria-hidden="true" />
+      </a>
+      <a class="social-link" href="https://open.kakao.com/me/vanistudio" target="_blank" rel="noopener noreferrer" aria-label="카카오톡">
+        <img src="img/header_kakao-talk.svg" alt="" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</header>
+`;
 
-if (menuButton && nav) {
+const getHeaderTarget = () => document.getElementById('site-header') || document.querySelector('.site-header');
+
+const initHeader = () => {
+  const headerMount = getHeaderTarget();
+  const menuButton = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
+  const activePage = headerMount?.dataset.activePage || window.location.pathname.split('/').pop();
+
+  document.querySelectorAll('.nav a[data-page]').forEach((link) => {
+    link.classList.toggle('active', link.dataset.page === activePage);
+  });
+
+  if (!menuButton || !nav) return;
+
   menuButton.addEventListener('click', () => {
     nav.classList.toggle('open');
   });
@@ -9,7 +43,33 @@ if (menuButton && nav) {
   nav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => nav.classList.remove('open'));
   });
-}
+};
+
+const loadHeader = async () => {
+  const headerMount = getHeaderTarget();
+  if (!headerMount) return;
+
+  try {
+    const response = await fetch('header.html', { cache: 'no-cache' });
+    if (!response.ok) throw new Error('Header fetch failed');
+    const headerHtml = await response.text();
+    if (headerMount.id === 'site-header') {
+      headerMount.innerHTML = headerHtml;
+    } else {
+      headerMount.outerHTML = headerHtml;
+    }
+  } catch (error) {
+    if (headerMount.id === 'site-header') {
+      headerMount.innerHTML = headerTemplate;
+    } else {
+      headerMount.outerHTML = headerTemplate;
+    }
+  }
+
+  initHeader();
+};
+
+loadHeader();
 
 const reviewTrack = document.getElementById('reviewTrack');
 
