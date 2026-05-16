@@ -44,6 +44,35 @@ const initHeader = () => {
     link.addEventListener('click', () => nav.classList.remove('open'));
   });
 };
+<<<<<<< Updated upstream
+=======
+
+const loadHeader = async () => {
+  const headerMount = getHeaderTarget();
+  if (!headerMount) return;
+
+  try {
+    const response = await fetch('header.html', { cache: 'no-cache' });
+    if (!response.ok) throw new Error('Header fetch failed');
+    const headerHtml = await response.text();
+    if (headerMount.id === 'site-header') {
+      headerMount.innerHTML = headerHtml;
+    } else {
+      headerMount.outerHTML = headerHtml;
+    }
+  } catch (error) {
+    if (headerMount.id === 'site-header') {
+      headerMount.innerHTML = headerTemplate;
+    } else {
+      headerMount.outerHTML = headerTemplate;
+    }
+  }
+
+  initHeader();
+};
+
+loadHeader();
+>>>>>>> Stashed changes
 
 const loadHeader = async () => {
   const headerMount = getHeaderTarget();
