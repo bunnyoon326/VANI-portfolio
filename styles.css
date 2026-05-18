@@ -1567,19 +1567,38 @@ body.detail-page .detail-content {
   .resume-list,
   .resume-list.compact {
     grid-template-columns: 1fr;
-    row-gap: 6px;
-    font-size: 15px;
+    row-gap: 0;
+    font-size: 16px;
+    line-height: 1.6;
   }
 
   .resume-list p {
-    margin-bottom: 8px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: 300;
   }
 
   .resume-list time,
   .resume-list.compact time,
   .resume-list.credentials time {
     min-width: 0;
-    color: #ba91ff;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .resume-list.credentials {
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 24px;
+    row-gap: 10px;
+  }
+
+  .resume-list.credentials time {
+    min-width: 42px;
+  }
+
+  .resume-list.credentials p {
+    margin-bottom: 0;
+    font-weight: 400;
   }
 
   .skill-grid {
@@ -1661,12 +1680,12 @@ body.detail-page .detail-content {
     align-items: flex-start;
     gap: 30px;
     padding: 50px;
-    background: rgba(35, 35, 35, 0.9);
+    background: rgba(15, 15, 15, 0.9);
     border: 0;
     border-radius: 0;
     font-size: 20px;
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
