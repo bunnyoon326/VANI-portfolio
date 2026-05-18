@@ -1615,6 +1615,8 @@ body.detail-page .detail-content {
     padding-inline: 1rem;
   }
 
+<<<<<<< HEAD
+=======
   .site-header {
     position: fixed;
     top: 0;
@@ -1630,6 +1632,7 @@ body.detail-page .detail-content {
     padding-top: 65px;
   }
 
+>>>>>>> bc6ce9c443ba063e706a61de9fc9a871aab27b14
   .site-header .container {
     width: 100%;
     padding-inline: 20px;
@@ -1680,12 +1683,15 @@ body.detail-page .detail-content {
     align-items: flex-start;
     gap: 30px;
     padding: 50px;
-    background: rgba(15, 15, 15, 0.9);
+    overflow: hidden;
+    background: rgba(15, 15, 15, 0.72);
+    background-clip: padding-box;
     border: 0;
     border-radius: 0;
     font-size: 20px;
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.08), 0 18px 50px rgba(0, 0, 0, 0.28);
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
@@ -1735,6 +1741,12 @@ body.detail-page .detail-content {
 
   body.menu-open .menu-backdrop {
     pointer-events: auto;
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav {
+      background: rgba(15, 15, 15, 0.94);
+    }
   }
 
   .floating-sns {
