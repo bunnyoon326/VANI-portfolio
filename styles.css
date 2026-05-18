@@ -208,6 +208,8 @@ html,
 body {
   margin: 0;
   padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: "AtoZ", "Pretendard", sans-serif;
   font-weight: 300;
   background: var(--bg);
@@ -258,7 +260,8 @@ h2 {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1400;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background: rgba(35, 35, 35, 0.5);
   border-bottom: 1px solid #fff;
@@ -889,7 +892,7 @@ h2 {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: clamp(90px, 11vw, 200px) clamp(24px, 6vw, 72px) 100px;
+  padding: 100px clamp(24px, 6vw, 72px) 100px;
 }
 
 .resume-shell {
@@ -1381,7 +1384,12 @@ body.detail-page .detail-content {
   }
 
   .site-header {
-    background: rgba(255, 255, 255, 0);
+    position: sticky;
+    top: 0;
+    z-index: 1400;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background: rgba(35, 35, 35, 0.5);
   }
 
   .site-header .container {
@@ -1423,13 +1431,13 @@ body.detail-page .detail-content {
 
   .nav {
     position: fixed;
-    top: 65px;
+    top: 66px;
     right: 0;
     z-index: 1300;
     display: flex;
     width: 288px;
     max-width: calc(100vw - 72px);
-    height: calc(100vh - 65px);
+    height: calc(100vh - 66px);
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
@@ -1438,6 +1446,7 @@ body.detail-page .detail-content {
     border: 0;
     border-radius: 0;
     font-size: 20px;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     transform: translateX(100%);
     opacity: 0;
@@ -1473,7 +1482,7 @@ body.detail-page .detail-content {
 
   .menu-backdrop {
     position: fixed;
-    inset: 65px 0 0;
+    inset: 66px 0 0;
     z-index: 1299;
     display: block;
     border: 0;
