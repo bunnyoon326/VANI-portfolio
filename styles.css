@@ -258,13 +258,19 @@ h2 {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1400;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  left: 0;
+  z-index: 3000;
+  width: 100%;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   background: rgba(35, 35, 35, 0.5);
   border-bottom: 1px solid #fff;
+}
+
+main {
+  padding-top: 100px;
 }
 
 .site-header .container {
@@ -384,7 +390,8 @@ h2 {
 }
 
 .hero {
-  min-height: calc(100vh - 100px);
+  min-height: 100vh;
+  margin-top: -100px;
   display: block;
   position: relative;
   padding: 0;
@@ -397,7 +404,7 @@ h2 {
   display: grid;
   align-items: center;
   width: 100%;
-  min-height: calc(100vh - 100px);
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   z-index: 2;
@@ -888,7 +895,7 @@ h2 {
 }
 
 .resume-section {
-  min-height: calc(100vh - 100px);
+  min-height: 100vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -1412,7 +1419,7 @@ body.detail-page .detail-content {
   }
 
   .hero-inner {
-    min-height: calc(100vh - 100px);
+    min-height: 100vh;
   }
 
   .hero-copy {
@@ -1608,6 +1615,24 @@ body.detail-page .detail-content {
     padding-inline: 1rem;
   }
 
+<<<<<<< HEAD
+=======
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+    width: 100%;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    background: rgba(35, 35, 35, 0.5);
+  }
+
+  main {
+    padding-top: 65px;
+  }
+
+>>>>>>> bc6ce9c443ba063e706a61de9fc9a871aab27b14
   .site-header .container {
     width: 100%;
     padding-inline: 20px;
@@ -1649,7 +1674,7 @@ body.detail-page .detail-content {
     position: fixed;
     top: 66px;
     right: 0;
-    z-index: 1300;
+    z-index: 2900;
     display: flex;
     width: 288px;
     max-width: calc(100vw - 72px);
@@ -1702,7 +1727,7 @@ body.detail-page .detail-content {
   .menu-backdrop {
     position: fixed;
     inset: 66px 0 0;
-    z-index: 1299;
+    z-index: 2890;
     display: block;
     border: 0;
     background: transparent;
@@ -1760,11 +1785,12 @@ body.detail-page .detail-content {
   }
 
   .hero {
-    min-height: clamp(500px, 78svh, 640px);
+    min-height: 100svh;
+    margin-top: -65px;
   }
 
   .hero-inner {
-    min-height: clamp(500px, 78svh, 640px);
+    min-height: 100svh;
     align-items: center;
   }
 
