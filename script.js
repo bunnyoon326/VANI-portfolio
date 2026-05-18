@@ -1,15 +1,19 @@
-const headerTemplate = `
+﻿const headerTemplate = `
 <header class="site-header">
   <div class="container header-inner">
-    <nav class="nav nav-left" aria-label="주요 메뉴">
+    <a class="logo logo-placeholder" href="index.html" aria-label="VANI 로고">
+      <img class="logo-image" src="img/logo.svg" alt="VANI 로고" />
+    </a>
+    <button class="menu-toggle" type="button" aria-label="메뉴 열기" aria-controls="site-nav" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <nav class="nav nav-left" id="site-nav" aria-label="주요 메뉴">
       <a href="about.html" data-page="about.html">ABOUT</a>
       <a href="work.html" data-page="work.html">WORK</a>
       <a href="contact.html" data-page="contact.html">CONTACT</a>
     </nav>
-    <a class="logo logo-placeholder" href="index.html" aria-label="VANI 로고">
-      <img class="logo-image" src="img/logo.svg" alt="VANI 로고" />
-    </a>
-    <button class="menu-toggle" aria-label="메뉴 열기">☰</button>
     <div class="header-social" aria-label="소셜 링크">
       <a class="social-link" href="https://www.instagram.com/vani.studio.kr/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램">
         <img src="img/header_instagram.svg" alt="" aria-hidden="true" />
@@ -37,6 +41,16 @@ const initHeader = () => {
   const menuButton = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
   const activePage = headerMount?.dataset.activePage || window.location.pathname.split('/').pop();
+  const header = document.querySelector('.site-header');
+  let menuBackdrop = document.querySelector('.menu-backdrop');
+
+  if (!menuBackdrop) {
+    menuBackdrop = document.createElement('button');
+    menuBackdrop.className = 'menu-backdrop';
+    menuBackdrop.type = 'button';
+    menuBackdrop.setAttribute('aria-label', '메뉴 닫기');
+    document.body.appendChild(menuBackdrop);
+  }
 
   document.querySelectorAll('.nav a[data-page]').forEach((link) => {
     link.classList.toggle('active', link.dataset.page === activePage);
@@ -44,12 +58,32 @@ const initHeader = () => {
 
   if (!menuButton || !nav) return;
 
+  const closeMenu = () => {
+    nav.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+    header?.classList.remove('menu-open');
+  };
+
+  const openMenu = () => {
+    nav.classList.add('open');
+    menuButton.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+    header?.classList.add('menu-open');
+  };
+
   menuButton.addEventListener('click', () => {
-    nav.classList.toggle('open');
+    if (nav.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
+  menuBackdrop.addEventListener('click', closeMenu);
+
   nav.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => nav.classList.remove('open'));
+    link.addEventListener('click', closeMenu);
   });
 };
 const loadHeader = async () => {
@@ -255,3 +289,5 @@ if (heroMarqueeGroupA && heroMarqueeGroupB) {
   heroMarqueeGroupA.innerHTML = marqueeHtml;
   heroMarqueeGroupB.innerHTML = marqueeHtml;
 }
+
+
