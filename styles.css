@@ -891,7 +891,7 @@ main {
 
 .about-page {
   min-height: calc(100vh - 100px);
-  background: #202020;
+  background: #131313;
 }
 
 .about-hero-section {
@@ -963,7 +963,7 @@ main {
 .resume-photo {
   width: var(--resume-photo-width);
   height: auto;
-  aspect-ratio: 362 / 384;
+  aspect-ratio: 282 / 300;
   margin: 0;
   overflow: hidden;
   border-radius: 30px;
@@ -1147,7 +1147,7 @@ main {
 
 .story-section {
   position: relative;
-  background: #202020;
+  background: #131313;
   color: #fff;
 }
 
@@ -1431,6 +1431,76 @@ body.detail-page .detail-header a {
 body.detail-page .detail-content {
   color: #33343c;
   line-height: 1.8;
+}
+
+@media (min-width: 901px) and (max-width: 1194px) {
+  main {
+    padding-top: 74px;
+  }
+
+  .site-header .container {
+    width: 100%;
+    padding-inline: clamp(120px, 13.4vw, 160px);
+  }
+
+  .header-inner {
+    min-height: 74px;
+    gap: 20px;
+  }
+
+  .logo-placeholder {
+    width: 50px;
+    height: 25px;
+  }
+
+  .nav {
+    gap: 20px;
+  }
+
+  .header-social {
+    gap: 30px;
+  }
+
+  .about-hero-section {
+    min-height: 572px;
+    padding: 200px 24px;
+  }
+
+  .resume-section {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 100px 120px 100px 160px;
+  }
+
+  .resume-shell {
+    width: 100%;
+    grid-template-columns: 282px 2px minmax(0, 1fr);
+  }
+
+  .resume-details {
+    gap: 20px;
+  }
+
+  .resume-two-column,
+  .resume-bottom {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .story-inner {
+    min-height: 598px;
+    padding: 100px 160px;
+  }
+
+  .story-section-03 {
+    padding: 100px 160px;
+  }
+
+  .story-cta {
+    min-height: 0;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 900px) {
