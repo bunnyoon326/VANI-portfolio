@@ -894,6 +894,43 @@ main {
   background: #202020;
 }
 
+.about-hero-section {
+  min-height: 412px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 138px;
+  background: linear-gradient(180deg, #ba91ff 0%, #131313 70%);
+  color: #fff;
+  text-align: center;
+}
+
+.about-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.about-hero-copy h1 {
+  margin: 0;
+  font-family: "HsJandari", "AtoZ", "Pretendard", sans-serif;
+  font-size: 60px;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.about-hero-copy p {
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
 .resume-section {
   min-height: 100vh;
   display: flex;
@@ -1375,6 +1412,19 @@ body.detail-page .detail-content {
 }
 
 @media (max-width: 900px) {
+  .about-hero-section {
+    min-height: 360px;
+    padding: 104px 24px 118px;
+  }
+
+  .about-hero-copy h1 {
+    font-size: 44px;
+  }
+
+  .about-hero-copy p {
+    font-size: 20px;
+  }
+
   .resume-section {
     padding-top: 80px;
   }
@@ -1468,6 +1518,26 @@ body.detail-page .detail-content {
 }
 
 @media (max-width: 760px) {
+  .about-hero-section {
+    min-height: 312px;
+    padding: 86px 20px 92px;
+  }
+
+  .about-hero-copy {
+    gap: 18px;
+  }
+
+  .about-hero-copy h1 {
+    font-size: 32px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .about-hero-copy p {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
   .resume-section {
     padding: 56px 1rem 72px;
   }
@@ -1615,24 +1685,10 @@ body.detail-page .detail-content {
     padding-inline: 1rem;
   }
 
-<<<<<<< HEAD
-=======
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3000;
-    width: 100%;
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
-    background: rgba(35, 35, 35, 0.5);
-  }
-
   main {
     padding-top: 65px;
   }
 
->>>>>>> bc6ce9c443ba063e706a61de9fc9a871aab27b14
   .site-header .container {
     width: 100%;
     padding-inline: 20px;
