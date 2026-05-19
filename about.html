@@ -29,10 +29,14 @@
     <main class="about-page" aria-label="About page">
       <section class="about-hero-section" aria-labelledby="about-hero-title">
         <div class="about-hero-copy">
-          <h1 id="about-hero-title">니즈를 읽고, 결과로 만드는 디자이너</h1>
+          <h1 id="about-hero-title">
+            <span>니즈를 읽고,</span><br class="about-mobile-break" />
+            <span>결과로 만드는 디자이너</span>
+          </h1>
           <p>
-            복잡한 요구사항 속에서 핵심을 찾고,<br />
-            보기 좋은 디자인을 넘어 실제로 쓰이는 결과물을 만듭니다.
+            <span>복잡한 요구사항 속에서 핵심을 찾고,</span><br />
+            <span>보기 좋은 디자인을 넘어</span><span class="about-desktop-tail"> 실제로 쓰이는 결과물을 만듭니다.</span><br class="about-mobile-break" />
+            <span class="about-mobile-tail">실제로 쓰이는 결과물을 만듭니다.</span>
           </p>
         </div>
       </section>
@@ -135,13 +139,18 @@
         <div class="story-inner">
           <div class="story-copy">
             <h2 id="story-title-01">낙서에서 콘텐츠까지</h2>
-            <div class="story-text">
+            <div class="story-text story-text-desktop">
               <p>어릴 적 저는 눈에 보이는 모든 여백을 그림판처럼 사용하던 아이였습니다.</p>
               <p>소파와 커튼 대신 스케치북을 얻은 뒤로, 그림은 제게 가장 자연스러운 표현 방식이 되었습니다.</p>
               <p>이후 이야기를 만들고 콘텐츠로 구성하는 과정을 배우며,</p>
               <p>그림은 단순한 취미를 넘어 사람에게 전달되는 하나의 언어가 되었습니다.</p>
               <p>지금은 그 언어를 웹사이트, 상세페이지, 프레젠테이션, 브랜드 콘텐츠로 확장하며</p>
               <p>필요한 메시지를 가장 알맞은 형태로 정리하는 디자이너로 일하고 있습니다.</p>
+            </div>
+            <div class="story-text story-text-mobile">
+              <p>어릴 적 저는 눈에 보이는 모든 여백을 그림판처럼 사용하던 아이였습니다. 소파와 커튼 대신 스케치북을 얻은 뒤로, 그림은 제게 가장 자연스러운 표현 방식이 되었습니다.</p>
+              <p>이후 이야기를 만들고 콘텐츠로 구성하는 과정을 배우며, 그림은 단순한 취미를 넘어 사람에게 전달되는 하나의 언어가 되었습니다.</p>
+              <p>지금은 그 언어를 웹사이트, 상세페이지, 프레젠테이션, 브랜드 콘텐츠로 확장하며 필요한 메시지를 가장 알맞은 형태로 정리하는 디자이너로 일하고 있습니다.</p>
             </div>
           </div>
           <img class="story-doodle" src="img/story_doodle.svg" alt="" aria-hidden="true" />
@@ -152,13 +161,25 @@
         <div class="story-inner story-inner-right">
           <div class="story-copy">
             <h2 id="story-title-02">My Design Direction</h2>
-            <div class="story-text">
+            <div class="story-text story-text-desktop">
               <p>저는 디자인을 단순히 보기 좋게 꾸미는 일이 아니라,</p>
               <p>필요한 정보를 더 쉽게 이해하도록 정리하는 일이라고 생각합니다.</p>
               <p>그래서 작업을 시작할 때 가장 먼저 보는 것은 취향보다 방향입니다.</p>
               <p>누가 보고, 무엇을 이해해야 하며, 어떤 행동으로 이어져야 하는지 고민합니다.</p>
               <p>바른디자인은 화려함보다 정확함에 가깝고,</p>
               <p>니즈를 아는 디자인은 결국 사람을 이해하는 일에서 시작됩니다.</p>
+            </div>
+            <div class="story-text story-text-mobile">
+              <p>저는 디자인을 단순히 보기 좋게 꾸미는 일이 아니라,</p>
+              <p>필요한 정보를 더 쉽게 이해하도록</p>
+              <p>정리하는 일이라고 생각합니다.</p>
+              <p>그래서 작업을 시작할 때 가장 먼저 보는 것은</p>
+              <p>취향보다 방향입니다.</p>
+              <p>누가 보고, 무엇을 이해해야 하며,</p>
+              <p>어떤 행동으로 이어져야 하는지 고민합니다.</p>
+              <p>바른디자인은 화려함보다 정확함에 가깝고,</p>
+              <p>니즈를 아는 디자인은 결국</p>
+              <p>사람을 이해하는 일에서 시작됩니다.</p>
             </div>
           </div>
         </div>
@@ -167,8 +188,11 @@
       <section class="story-section story-section-03" aria-label="문의하기">
         <div class="story-cta">
           <h2>
-            복잡한 생각을 또렷한 결과물로 바꾸고 싶다면,<br />
-            함께 방향을 정리해볼게요.
+            복잡한 생각을 <br class="story-mobile-break" />
+            또렷한 결과물로 <br class="story-mobile-break" />
+            바꾸고 싶다면,<br />
+            함께 방향을 <br class="story-mobile-break" />
+            정리해볼게요.
           </h2>
           <div class="story-actions">
             <a class="story-btn story-btn-dark" href="contact.html">지금 간편 문의하기</a>

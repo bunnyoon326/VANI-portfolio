@@ -263,9 +263,9 @@ h2 {
   left: 0;
   z-index: 3000;
   width: 100%;
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  background: rgba(35, 35, 35, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(19, 19, 19, 0.8);
   border-bottom: 1px solid #fff;
 }
 
@@ -895,11 +895,11 @@ main {
 }
 
 .about-hero-section {
-  min-height: 412px;
+  min-height: 772px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 24px 138px;
+  padding: 0 24px;
   background: linear-gradient(180deg, #ba91ff 0%, #131313 70%);
   color: #fff;
   text-align: center;
@@ -917,9 +917,14 @@ main {
   font-family: "HsJandari", "AtoZ", "Pretendard", sans-serif;
   font-size: 60px;
   font-weight: normal;
-  line-height: 1.2;
+  line-height: 1.4;
   letter-spacing: -0.01em;
   color: #fff;
+}
+
+.about-mobile-break,
+.about-mobile-tail {
+  display: none;
 }
 
 .about-hero-copy p {
@@ -932,17 +937,18 @@ main {
 }
 
 .resume-section {
+  --resume-photo-width: 282px;
   min-height: 100vh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 100px clamp(24px, 6vw, 72px) 100px;
+  padding: 100px 20px;
 }
 
 .resume-shell {
-  width: min(1200px, 100%);
+  width: min(1280px, 100%);
   display: grid;
-  grid-template-columns: 282px 2px minmax(0, 792px);
+  grid-template-columns: var(--resume-photo-width) 2px minmax(0, 792px);
   gap: 62px;
   align-items: start;
 }
@@ -955,8 +961,9 @@ main {
 }
 
 .resume-photo {
-  width: 282px;
-  height: 300px;
+  width: var(--resume-photo-width);
+  height: auto;
+  aspect-ratio: 362 / 384;
   margin: 0;
   overflow: hidden;
   border-radius: 30px;
@@ -1144,6 +1151,13 @@ main {
   color: #fff;
 }
 
+.story-section-01 {
+  --story-doodle-top: 24.22%;
+  --story-doodle-left: 70.53%;
+  --story-doodle-size: min(12.71vw, 244px);
+  --story-doodle-rotate: 0deg;
+}
+
 .story-inner {
   position: relative;
   min-height: 598px;
@@ -1176,6 +1190,11 @@ main {
   letter-spacing: -0.01em;
 }
 
+.story-text-mobile,
+.story-mobile-break {
+  display: none;
+}
+
 .story-text p {
   margin: 0;
 }
@@ -1191,12 +1210,15 @@ main {
 
 .story-doodle {
   position: absolute;
-  top: 24.22%;
-  right: 16.76%;
-  width: 244px;
-  height: 244px;
+  top: var(--story-doodle-top);
+  left: var(--story-doodle-left);
+  width: var(--story-doodle-size);
+  height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   pointer-events: none;
+  transform: rotate(var(--story-doodle-rotate));
+  transform-origin: center;
 }
 
 .story-inner-right {
@@ -1255,7 +1277,7 @@ main {
 }
 
 .story-btn-dark {
-  background: #232323;
+  background: #131313;
   color: #fff;
 }
 
@@ -1412,17 +1434,21 @@ body.detail-page .detail-content {
 }
 
 @media (max-width: 900px) {
+  .resume-section {
+    --resume-photo-width: min(362px, 100%);
+  }
+
   .about-hero-section {
-    min-height: 360px;
-    padding: 104px 24px 118px;
+    min-height: 771px;
+    padding: 0 20px;
   }
 
   .about-hero-copy h1 {
-    font-size: 44px;
+    font-size: 30px;
   }
 
   .about-hero-copy p {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .resume-section {
@@ -1519,27 +1545,35 @@ body.detail-page .detail-content {
 
 @media (max-width: 760px) {
   .about-hero-section {
-    min-height: 312px;
-    padding: 86px 20px 92px;
+    min-height: 771px;
   }
 
   .about-hero-copy {
-    gap: 18px;
+    gap: 30px;
   }
 
   .about-hero-copy h1 {
-    font-size: 32px;
-    line-height: 1.25;
+    font-size: 30px;
     white-space: normal;
+  }
+
+  .about-mobile-break,
+  .about-mobile-tail {
+    display: inline;
+  }
+
+  .about-desktop-tail {
+    display: none;
   }
 
   .about-hero-copy p {
     font-size: 16px;
-    line-height: 1.45;
+    line-height: 1.2;
   }
 
   .resume-section {
-    padding: 56px 1rem 72px;
+    --resume-photo-width: min(362px, 100%);
+    padding: 50px 20px 72px;
   }
 
   .story-inner {
@@ -1570,19 +1604,36 @@ body.detail-page .detail-content {
     letter-spacing: -0.01em;
   }
 
-  .story-section-01 .story-text p:nth-child(3),
-  .story-section-01 .story-text p:nth-child(5),
-  .story-section-02 .story-text p:nth-child(3),
-  .story-section-02 .story-text p:nth-child(5) {
-    margin-top: 26px;
+  .story-text-desktop {
+    display: none;
+  }
+
+  .story-text-mobile {
+    display: block;
+  }
+
+  .story-section-01 .story-text-mobile p + p {
+    margin-top: 25px;
+  }
+
+  .story-section-02 .story-text-mobile p:nth-child(4),
+  .story-section-02 .story-text-mobile p:nth-child(8) {
+    margin-top: 25px;
+  }
+
+  .story-mobile-break {
+    display: inline;
   }
 
   .story-doodle {
+    --story-doodle-size: 99px;
+    --story-doodle-rotate: 0deg;
     top: auto;
+    left: auto;
     right: 20px;
     bottom: 108px;
-    width: 99px;
-    height: 108px;
+    width: var(--story-doodle-size);
+    height: auto;
   }
 
   .story-section-03 {
@@ -1621,9 +1672,8 @@ body.detail-page .detail-content {
   }
 
   .resume-photo {
-    width: min(282px, 100%);
-    height: auto;
-    aspect-ratio: 282 / 300;
+    width: var(--resume-photo-width);
+    aspect-ratio: 362 / 384;
   }
 
   .resume-name {
@@ -1728,26 +1778,26 @@ body.detail-page .detail-content {
 
   .nav {
     position: fixed;
-    top: 66px;
+    top: 65px;
     right: 0;
     z-index: 2900;
     display: flex;
     width: 288px;
     max-width: calc(100vw - 72px);
-    height: calc(100vh - 66px);
+    height: calc(100vh - 65px);
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
     padding: 50px;
     overflow: hidden;
-    background: rgba(15, 15, 15, 0.72);
+    background: rgba(19, 19, 19, 0.8);
     background-clip: padding-box;
     border: 0;
     border-radius: 0;
     font-size: 20px;
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    backdrop-filter: blur(24px) saturate(160%);
-    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.08), 0 18px 50px rgba(0, 0, 0, 0.28);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: none;
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
@@ -1782,7 +1832,7 @@ body.detail-page .detail-content {
 
   .menu-backdrop {
     position: fixed;
-    inset: 66px 0 0;
+    inset: 65px 0 0;
     z-index: 2890;
     display: block;
     border: 0;
@@ -1801,7 +1851,7 @@ body.detail-page .detail-content {
 
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .nav {
-      background: rgba(15, 15, 15, 0.94);
+      background: rgba(19, 19, 19, 0.94);
     }
   }
 
