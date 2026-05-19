@@ -42,6 +42,8 @@ const initHeader = () => {
   const nav = document.querySelector('.nav');
   const activePage = headerMount?.dataset.activePage || window.location.pathname.split('/').pop();
   const header = document.querySelector('.site-header');
+  const headerInner = document.querySelector('.header-inner');
+  const headerSocial = document.querySelector('.header-social');
   let menuBackdrop = document.querySelector('.menu-backdrop');
 
   if (!menuBackdrop) {
@@ -57,6 +59,21 @@ const initHeader = () => {
   });
 
   if (!menuButton || !nav) return;
+
+  const mobileNavQuery = window.matchMedia('(max-width: 760px)');
+
+  const syncNavMount = () => {
+    if (mobileNavQuery.matches) {
+      if (nav.parentElement !== document.body) {
+        document.body.appendChild(nav);
+      }
+      return;
+    }
+
+    if (headerInner && nav.parentElement !== headerInner) {
+      headerInner.insertBefore(nav, headerSocial || null);
+    }
+  };
 
   const closeMenu = () => {
     nav.classList.remove('open');
@@ -84,6 +101,12 @@ const initHeader = () => {
 
   nav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', closeMenu);
+  });
+
+  syncNavMount();
+  mobileNavQuery.addEventListener('change', () => {
+    closeMenu();
+    syncNavMount();
   });
 };
 const loadHeader = async () => {

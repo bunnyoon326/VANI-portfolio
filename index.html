@@ -56,18 +56,19 @@
 
       <section class="about section" id="about">
         <div class="container narrow">
-          <h2>About</h2>
+          <h2>ABOUT</h2>
           <p>
-            감정이 닿는 미니멀한 화면을 설계합니다.<br />
-            사용자 니즈를 읽고, 브랜드의 결을 정리해 전달력 있는 결과물로 만듭니다.<br />
-            조용하지만 오래 남는 경험을 목표로 합니다.
+            니즈를 읽고, 방향을 정리하고, 결과로 완성하는 디자이너입니다.<br />
+            웹사이트와 콘텐츠, 상세페이지, PPT 등 다양한 디자인 경험을 바탕으로<br />
+            깔끔하지만 심심하지 않고, 보기 좋지만 쓰임을 놓치지 않는 디자인을 만듭니다.
           </p>
+          <a class="btn main-about-btn" href="about.html">View More</a>
         </div>
       </section>
 
       <section class="reviews section" id="reviews">
         <div class="container">
-          <h2>Review</h2>
+          <h2>REVIEW</h2>
           <div class="review-track" id="reviewTrack">
             <article class="review-card">
               <p>
@@ -120,7 +121,7 @@
             <div class="portfolio-lane-blank side-bottom" aria-hidden="true"></div>
             <div class="portfolio-lane-grid">
               <div class="portfolio-lane-item lane-intro">
-                <h2 class="lane-heading">Portfolio</h2>
+                <h2 class="lane-heading">PORTFOLIO</h2>
                 <p class="lane-subtitle">전체 작업물은 아래 View All Projects 버튼에서 확인해보세요.</p>
               </div>
               <div class="portfolio-lane-item lane-card">
@@ -170,26 +171,47 @@
               </div>
               <div class="contact-fields contact-col">
                 <label>
-                  Name
+                  이름
                   <input type="text" name="name" required />
                 </label>
                 <label>
-                  Phone
+                  연락처
                   <input type="tel" name="phone" required />
                 </label>
                 <label>
-                  Email
-                  <input type="email" name="email" required />
+                  문의 유형
+                  <select name="type" required>
+                    <option value="" selected disabled>선택</option>
+                    <option>웹사이트</option>
+                    <option>상세페이지</option>
+                    <option>SNS 콘텐츠</option>
+                    <option>PPT</option>
+                    <option>기타</option>
+                  </select>
                 </label>
               </div>
               <div class="contact-fields contact-col">
                 <label>
-                  Message
+                  소속/단체
+                  <input type="text" name="organization" />
+                </label>
+                <label>
+                  이메일
+                  <input type="email" name="email" required />
+                </label>
+                <label>
+                  보유예산 <small>*만 원 단위</small>
+                  <input type="text" name="budget" />
+                </label>
+              </div>
+              <div class="contact-fields contact-message-col">
+                <label>
+                  문의 내용
                   <textarea name="message" rows="5" required></textarea>
                 </label>
               </div>
               <div class="contact-actions contact-col">
-                <button type="submit" class="btn">문의하기</button>
+                <button type="submit" class="btn">지금 간편 문의하기</button>
                 <a
                   class="btn btn-outline"
                   href="https://open.kakao.com/me/vanistudio"
