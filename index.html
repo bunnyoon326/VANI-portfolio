@@ -180,14 +180,21 @@
                 </label>
                 <label>
                   문의 유형
-                  <select name="type" required>
-                    <option value="" selected disabled>선택</option>
-                    <option>웹사이트</option>
-                    <option>상세페이지</option>
-                    <option>SNS 콘텐츠</option>
-                    <option>PPT</option>
-                    <option>기타</option>
-                  </select>
+                  <span class="select-wrap">
+                    <select name="type" required>
+                      <option value="" selected disabled>선택</option>
+                      <option>홈페이지</option>
+                      <option>상세페이지</option>
+                      <option>로고제작</option>
+                      <option>명함제작</option>
+                      <option>SNS용 카드뉴스/배너</option>
+                      <option>현수막/전단지/팜플렛 등 인쇄물</option>
+                      <option>기타</option>
+                    </select>
+                    <button class="mobile-select-trigger" type="button" aria-haspopup="dialog" aria-expanded="false">
+                      <span>선택</span>
+                    </button>
+                  </span>
                 </label>
               </div>
               <div class="contact-fields contact-col">
@@ -200,7 +207,7 @@
                   <input type="email" name="email" required />
                 </label>
                 <label>
-                  보유예산 <small>*만 원 단위</small>
+                  <span class="label-row">보유예산 <small>*만 원 단위</small></span>
                   <input type="text" name="budget" />
                 </label>
               </div>
@@ -218,7 +225,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                   role="button"
-                  >카톡하기</a
+                  >카톡으로 문의하기</a
                 >
               </div>
             </div>
@@ -256,6 +263,18 @@
       </a>
     </div>
 
+    <div class="mobile-select-modal" id="contactTypeModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="문의 유형 선택">
+      <button class="mobile-select-backdrop" type="button" aria-label="문의 유형 선택 닫기"></button>
+      <div class="mobile-select-sheet" role="listbox" tabindex="-1">
+        <button type="button" role="option" data-value="홈페이지">홈페이지</button>
+        <button type="button" role="option" data-value="상세페이지">상세페이지</button>
+        <button type="button" role="option" data-value="로고제작">로고제작</button>
+        <button type="button" role="option" data-value="명함제작">명함제작</button>
+        <button type="button" role="option" data-value="SNS용 카드뉴스/배너">SNS용 카드뉴스/배너</button>
+        <button type="button" role="option" data-value="현수막/전단지/팜플렛 등 인쇄물">현수막/전단지/팜플렛 등 인쇄물</button>
+        <button type="button" role="option" data-value="기타">기타</button>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

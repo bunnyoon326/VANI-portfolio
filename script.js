@@ -155,24 +155,48 @@ if (reviewTrack) {
   }, 3500);
 }
 
+const heroFrame = document.getElementById('heroFrame');
+const heroOrbs = document.querySelectorAll('.hero-orb');
+
+if (heroFrame && heroOrbs.length) {
+  const mouse = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.25, active: false };
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
+  const orbConfig = [
+    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 460, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
+    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 420, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
+    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 380, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
+  ];
+
+  const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+  const getRectData = () => {
 const heroFrame = document.querySelector('.hero');
 const heroOrbs = document.querySelectorAll('.hero-orb');
 
 if (heroFrame && heroOrbs.length) {
   const mouse = { x: 0, y: 0, active: false };
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const orbSeeds = [
+  const isMobileHero = () => window.matchMedia('(max-width: 760px)').matches;
+  const desktopOrbSeeds = [
     { x: 0.1, y: -0.05, vx: 0.13, vy: 0.07 },
     { x: 0.5, y: 0.12, vx: -0.08, vy: 0.11 },
     { x: 0.48, y: 0.47, vx: 0.1, vy: -0.06 },
   ];
+  const mobileOrbSeeds = [
+    { x: 0, y: 0, vx: 0.09, vy: 0.07 },
+    { x: 0.35, y: 0.14, vx: -0.08, vy: 0.08 },
+    { x: 0.09, y: 0.4, vx: 0.08, vy: -0.06 },
+  ];
+  const getOrbSeeds = () => (isMobileHero() ? mobileOrbSeeds : desktopOrbSeeds);
 
   const state = Array.from(heroOrbs, (element, index) => ({
     element,
     x: 0,
     y: 0,
-    vx: orbSeeds[index]?.vx || 0.08,
-    vy: orbSeeds[index]?.vy || 0.08,
+    vx: getOrbSeeds()[index]?.vx || 0.08,
+    vy: getOrbSeeds()[index]?.vy || 0.08,
     size: element.offsetWidth || 500,
   }));
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -190,8 +214,20 @@ if (heroFrame && heroOrbs.length) {
 
   let frameRect = getRectData();
 
+  const recalcBase = () => {
+    frameRect = getRectData();
+    state.forEach((orb, index) => {
+      orb.x = frameRect.width * orbConfig[index].baseX;
+      orb.y = frameRect.height * orbConfig[index].baseY;
+    });
+  };
+
+  recalcBase();
+  let frameRect = getRectData();
+
   const recalcBounds = () => {
     frameRect = getRectData();
+    const orbSeeds = getOrbSeeds();
     state.forEach((orb, index) => {
       orb.size = orb.element.offsetWidth || orb.size;
       const seed = orbSeeds[index] || orbSeeds[0];
