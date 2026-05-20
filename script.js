@@ -135,6 +135,7 @@ const loadHeader = async () => {
 
 loadHeader();
 
+<<<<<<< Updated upstream
 const reviewTrack = document.getElementById('reviewTrack');
 
 if (reviewTrack) {
@@ -172,10 +173,175 @@ if (heroFrame && heroOrbs.length) {
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
   const getRectData = () => {
+=======
+const reviewTrack = document.getElementById('reviewTrack');
+
+if (reviewTrack) {
+  const mobileReview = window.matchMedia('(max-width: 760px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const originalCards = Array.from(reviewTrack.children);
+  let reviewAnimationFrame = null;
+  let reviewLoopOffset = 0;
+  let reviewLoopDistance = 0;
+  let reviewLastTime = 0;
+
+  const clearReviewLoop = () => {
+    if (reviewAnimationFrame) {
+      window.cancelAnimationFrame(reviewAnimationFrame);
+      reviewAnimationFrame = null;
+    }
+    reviewLoopOffset = 0;
+    reviewLoopDistance = 0;
+    reviewLastTime = 0;
+    reviewTrack.classList.remove('is-review-loop');
+    reviewTrack.style.removeProperty('--review-loop-distance');
+    reviewTrack.style.removeProperty('transform');
+    reviewTrack.querySelectorAll('[data-review-clone="true"]').forEach((clone) => clone.remove());
+  };
+
+  const animateReviewLoop = (now) => {
+    if (!reviewLastTime) reviewLastTime = now;
+    const delta = Math.min(now - reviewLastTime, 48);
+    reviewLastTime = now;
+
+    reviewLoopOffset = (reviewLoopOffset + delta * 0.035) % reviewLoopDistance;
+    reviewTrack.style.transform = `translate3d(${-reviewLoopOffset}px, 0, 0)`;
+    reviewAnimationFrame = window.requestAnimationFrame(animateReviewLoop);
+  };
+
+  const setupReviewLoop = () => {
+    clearReviewLoop();
+
+    if (!mobileReview.matches || reducedMotion.matches) return;
+
+    originalCards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.reviewClone = 'true';
+      reviewTrack.appendChild(clone);
+    });
+
+    const firstClone = reviewTrack.querySelector('[data-review-clone="true"]');
+    if (!firstClone) return;
+
+    const loopDistance = firstClone.offsetLeft - reviewTrack.firstElementChild.offsetLeft;
+    if (!loopDistance) return;
+
+    reviewLoopDistance = loopDistance;
+    reviewTrack.style.setProperty('--review-loop-distance', `${reviewLoopDistance}px`);
+    reviewTrack.classList.add('is-review-loop');
+    reviewAnimationFrame = window.requestAnimationFrame(animateReviewLoop);
+  };
+
+  setupReviewLoop();
+  const onReviewMediaChange = () => setupReviewLoop();
+
+  if (mobileReview.addEventListener) {
+    mobileReview.addEventListener('change', onReviewMediaChange);
+    reducedMotion.addEventListener('change', onReviewMediaChange);
+  } else {
+    mobileReview.addListener(onReviewMediaChange);
+    reducedMotion.addListener(onReviewMediaChange);
+  }
+}
+
+const contactTypeSelect = document.querySelector('select[name="type"]');
+const contactTypeTrigger = document.querySelector('.mobile-select-trigger');
+const contactTypeTriggerText = contactTypeTrigger?.querySelector('span');
+const contactTypeModal = document.getElementById('contactTypeModal');
+const contactTypeSheet = contactTypeModal?.querySelector('.mobile-select-sheet');
+const contactTypeBackdrop = contactTypeModal?.querySelector('.mobile-select-backdrop');
+const contactTypeOptions = contactTypeModal?.querySelectorAll('[data-value]');
+const mobileContactSelect = window.matchMedia('(max-width: 760px)');
+
+if (contactTypeSelect && contactTypeTrigger && contactTypeModal && contactTypeOptions?.length) {
+  const closeContactTypeModal = () => {
+    contactTypeModal.classList.remove('is-open');
+    contactTypeModal.setAttribute('aria-hidden', 'true');
+    contactTypeTrigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('modal-open');
+    contactTypeTrigger.focus();
+  };
+
+  const openContactTypeModal = () => {
+    if (!mobileContactSelect.matches) return;
+
+    contactTypeModal.classList.add('is-open');
+    contactTypeModal.setAttribute('aria-hidden', 'false');
+    contactTypeTrigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('modal-open');
+    contactTypeSheet?.focus();
+  };
+
+  const setContactTypeValue = (value) => {
+    contactTypeSelect.value = value;
+    contactTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    if (contactTypeTriggerText) contactTypeTriggerText.textContent = value || '선택';
+  };
+
+  contactTypeTrigger.addEventListener('click', openContactTypeModal);
+  contactTypeBackdrop?.addEventListener('click', closeContactTypeModal);
+
+  contactTypeOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      setContactTypeValue(option.dataset.value);
+      closeContactTypeModal();
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && contactTypeModal.classList.contains('is-open')) {
+      closeContactTypeModal();
+    }
+  });
+
+  contactTypeSelect.addEventListener('change', () => {
+    if (contactTypeTriggerText) contactTypeTriggerText.textContent = contactTypeSelect.value || '선택';
+  });
+}
+
+const heroFrame = document.querySelector('.hero');
+const heroOrbs = document.querySelectorAll('.hero-orb');
+
+if (heroFrame && heroOrbs.length) {
+  const mouse = { x: 0, y: 0, active: false };
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobileHero = () => window.matchMedia('(max-width: 760px)').matches;
+  const desktopOrbSeeds = [
+    { x: 0.1, y: -0.05, vx: 0.13, vy: 0.07 },
+    { x: 0.5, y: 0.12, vx: -0.08, vy: 0.11 },
+    { x: 0.48, y: 0.47, vx: 0.1, vy: -0.06 },
+  ];
+  const mobileOrbSeeds = [
+    { x: 0, y: 0, vx: 0.09, vy: 0.07 },
+    { x: 0.35, y: 0.14, vx: -0.08, vy: 0.08 },
+    { x: 0.09, y: 0.4, vx: 0.08, vy: -0.06 },
+  ];
+  const getOrbSeeds = () => (isMobileHero() ? mobileOrbSeeds : desktopOrbSeeds);
+
+  const state = Array.from(heroOrbs, (element, index) => ({
+    element,
+    x: 0,
+    y: 0,
+    vx: getOrbSeeds()[index]?.vx || 0.08,
+    vy: getOrbSeeds()[index]?.vy || 0.08,
+    size: element.offsetWidth || 500,
+  }));
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const reflectVelocity = (orb, normalX, normalY) => {
+    const dot = orb.vx * normalX + orb.vy * normalY;
+    if (dot >= 0) return;
+    orb.vx -= 2 * dot * normalX;
+    orb.vy -= 2 * dot * normalY;
+  };
+
+  const getRectData = () => {
+>>>>>>> Stashed changes
     const rect = heroFrame.getBoundingClientRect();
     return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
   };
 
+<<<<<<< Updated upstream
   let frameRect = getRectData();
 
   const recalcBase = () => {
@@ -187,6 +353,27 @@ if (heroFrame && heroOrbs.length) {
   };
 
   recalcBase();
+=======
+  let frameRect = getRectData();
+
+  const recalcBounds = () => {
+    frameRect = getRectData();
+    const orbSeeds = getOrbSeeds();
+    state.forEach((orb, index) => {
+      orb.size = orb.element.offsetWidth || orb.size;
+      const seed = orbSeeds[index] || orbSeeds[0];
+      if (!orb.initialized) {
+        orb.x = frameRect.width * seed.x;
+        orb.y = frameRect.height * seed.y;
+        orb.initialized = true;
+      }
+      orb.x = clamp(orb.x, 0, Math.max(0, frameRect.width - orb.size));
+      orb.y = clamp(orb.y, 0, Math.max(0, frameRect.height - orb.size));
+    });
+  };
+
+  recalcBounds();
+>>>>>>> Stashed changes
 
   const onPointer = (clientX, clientY) => {
     mouse.x = clientX;

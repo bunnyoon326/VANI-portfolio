@@ -659,6 +659,12 @@ main {
   gap: 30px;
 }
 
+.reviews .container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 #about h2,
 .reviews h2,
 .contact-copy h2 {
@@ -671,6 +677,10 @@ main {
   line-height: 1;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+}
+
+.reviews h2 {
+  line-height: 1.4;
 }
 
 #about p {
@@ -697,6 +707,7 @@ main {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 282px));
   gap: 24px;
+  width: 100%;
   overflow: visible;
   padding-bottom: 0;
   scroll-snap-type: none;
@@ -720,12 +731,19 @@ main {
   border: 1px solid rgba(186, 145, 255, 0.5);
   border-radius: 20px;
   padding: 30px 20px;
+  overflow: hidden;
   scroll-snap-align: unset;
+}
+
+@media (min-width: 1281px) {
+  .review-card {
+    height: 400px;
+  }
 }
 
 .review-card p {
   color: var(--text);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.6;
   letter-spacing: -0.01em;
   margin: 0;
@@ -919,6 +937,7 @@ main {
   font-size: 20px;
   line-height: 1.6;
   max-width: 282px;
+  min-height: 300px;
 }
 
 .contact-copy h2 {
@@ -931,9 +950,9 @@ main {
 
 .contact-form-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 282px));
   gap: 24px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .contact-col {
@@ -955,31 +974,67 @@ main {
   letter-spacing: -0.01em;
 }
 
+.label-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
 .contact-form label small {
   font-size: 10px;
   font-weight: 300;
+  line-height: 1.6;
 }
 
 .contact-form input,
 .contact-form select,
 .contact-form textarea {
   width: 100%;
+  height: 50px;
   border-radius: 10px;
   border: 1px solid rgba(186, 145, 255, 0.5);
   background: rgba(186, 145, 255, 0.05);
   color: var(--text);
   padding: 0 10px;
   font: inherit;
-  min-height: 50px;
   outline: none;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .contact-form select {
   appearance: none;
+  padding-right: 44px;
+}
+
+.select-wrap {
+  position: relative;
+  display: block;
+}
+
+.mobile-select-trigger {
+  display: none;
+}
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 15px;
+  height: 8px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  background: #ba91ff;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.mobile-select-modal {
+  display: none;
 }
 
 .contact-form textarea {
+  height: 200px;
   min-height: 200px;
   padding-block: 10px;
   resize: vertical;
@@ -997,11 +1052,14 @@ main {
 }
 
 .contact-actions {
+  grid-column: 4;
+  grid-row: 1;
   display: flex;
   gap: 20px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
+  min-height: 300px;
 }
 
 .contact-actions .btn {
@@ -1760,6 +1818,7 @@ body.detail-page .detail-content {
 @media (max-width: 760px) {
   :root {
     --header-height: 65px;
+    --main-side-padding: 14px;
   }
 
   .about-hero-section {
@@ -1955,7 +2014,7 @@ body.detail-page .detail-content {
 
   .site-header .container {
     width: 100%;
-    padding-inline: 20px;
+    padding-inline: 14px 20px;
   }
 
   .header-inner {
@@ -2060,6 +2119,10 @@ body.detail-page .detail-content {
     overflow: hidden;
   }
 
+  body.modal-open {
+    overflow: hidden;
+  }
+
   body.menu-open .menu-backdrop {
     pointer-events: auto;
   }
@@ -2106,9 +2169,9 @@ body.detail-page .detail-content {
   }
 
   .hero {
-    min-height: 100svh;
+    min-height: 643px;
     margin-top: 0;
-    padding: var(--header-height) 0 0;
+    padding: 0;
   }
 
   .nav::before {
@@ -2126,13 +2189,45 @@ body.detail-page .detail-content {
   }
 
   .hero-inner {
-    min-height: calc(100svh - var(--header-height));
-    align-items: center;
+    min-height: 643px;
   }
 
   .hero-copy {
-    width: 100%;
-    padding-inline: 1rem;
+    top: 200px;
+    right: 14px;
+    width: min(303px, calc(100% - 28px));
+    max-width: none;
+    padding-inline: 0;
+    text-align: right;
+  }
+
+  .hero-kicker {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-orb-1 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-orb-2 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .hero-orb-3 {
+    width: 250px;
+    height: 250px;
   }
 
   .hero-marquee {
@@ -2143,16 +2238,173 @@ body.detail-page .detail-content {
   }
 
   .hero-marquee-wrap {
-    margin-top: -1rem;
-    margin-bottom: 72px;
+    z-index: 6;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -100px;
+    margin-bottom: 40px;
+    overflow: visible;
+  }
+
+  .hero-marquee {
+    width: 2102px;
+    height: 60px;
+    margin-left: -435px;
+    margin-right: 0;
+    transform: rotate(-4.99deg);
+  }
+
+  .hero-marquee-group {
+    padding-right: 2.6rem;
+  }
+
+  .hero-marquee-item {
+    gap: 1rem;
+    padding: 0 0.45rem;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-marquee-star {
+    width: 26px;
+    height: 26px;
   }
 
   .hero-scroll-indicator {
-    bottom: 4.6rem;
+    top: 418px;
+    width: 50px;
+    height: 25px;
+  }
+
+  .hero-scroll-indicator svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  #about,
+  .reviews,
+  .portfolio,
+  .contact {
+    padding: 50px 14px;
+  }
+
+  #about .container,
+  .reviews .container,
+  .portfolio .container,
+  .contact .container {
+    width: 100%;
+  }
+
+  #about .container {
+    gap: 30px;
+  }
+
+  #about h2,
+  .reviews h2,
+  .contact-copy h2,
+  .lane-heading {
+    font-size: 40px !important;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  #about p {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.05em;
+  }
+
+  #about p br {
+    display: none;
+  }
+
+  .main-about-btn {
+    min-height: 48px;
+    padding: 8px 30px;
+    font-size: 20px;
+  }
+
+  .reviews .container {
+    align-items: flex-start;
+  }
+
+  .review-track {
+    display: flex;
+    width: calc(100vw - 14px);
+    gap: 14px;
+    overflow: visible;
+    padding-right: 14px;
+    scroll-snap-type: none;
+    scrollbar-width: none;
+  }
+
+  .review-track.is-review-loop {
+    width: max-content;
+    padding-right: 0;
+    will-change: transform;
+  }
+
+  .review-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .review-card {
+    width: 268px;
+    min-width: 268px;
+    min-height: 350px;
+    padding: 30px 20px;
+    scroll-snap-align: unset;
+  }
+
+  .review-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  .review-tags span {
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .portfolio-lane-shell {
+    min-height: 0;
   }
 
   .portfolio-lane-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 174px));
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .portfolio-lane-item,
+  .portfolio-lane-blank {
+    min-height: 200px;
+    aspect-ratio: auto;
+    border-radius: 20px;
+  }
+
+  .lane-intro {
+    grid-column: 1 / -1;
+    min-height: 112px;
+    margin-bottom: 36px;
+  }
+
+  .lane-subtitle {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .portfolio-cta-wrap {
+    margin-top: 50px;
+  }
+
+  .portfolio-cta-wrap .btn {
+    width: min(325px, 100%);
+    min-height: 68px;
+    padding: 10px 50px;
+    font-size: 24px;
   }
 
   .lane-overlay {
@@ -2170,6 +2422,154 @@ body.detail-page .detail-content {
 
   .contact-form-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .contact-copy {
+    min-height: 0;
+    max-width: none;
+    margin-bottom: 10px;
+  }
+
+  .contact-copy p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .contact-fields {
+    display: contents;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(2) label:nth-child(1) {
+    order: 1;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(2) label:nth-child(2) {
+    order: 2;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(2) label:nth-child(3) {
+    order: 6;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(3) label:nth-child(1) {
+    order: 3;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(3) label:nth-child(2) {
+    order: 4;
+  }
+
+  .contact-form-grid > .contact-fields:nth-of-type(3) label:nth-child(3) {
+    order: 5;
+  }
+
+  .contact-message-col {
+    order: 7;
+    grid-column: auto;
+  }
+
+  .contact-actions {
+    order: 8;
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 0;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 10px;
+  }
+
+  .contact-actions .btn {
+    width: 100%;
+    min-height: 72px;
+    padding: 20px 50px;
+    font-size: 20px;
+  }
+
+  .select-wrap select {
+    color: transparent;
+    pointer-events: none;
+  }
+
+  .mobile-select-trigger {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 50px;
+    padding: 0 44px 0 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .mobile-select-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .mobile-select-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-select-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+  .mobile-select-sheet {
+    position: relative;
+    z-index: 1;
+    width: min(380px, 100%);
+    min-height: 282px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 10px;
+    overflow: hidden;
+    border: 1px solid #666;
+    border-bottom: 0;
+    border-radius: 20px 20px 0 0;
+    background: #333;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .mobile-select-sheet button {
+    width: 100%;
+    min-height: 26px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
   }
 }
 
