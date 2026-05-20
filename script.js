@@ -60,7 +60,7 @@ const initHeader = () => {
 
   if (!menuButton || !nav) return;
 
-  const mobileNavQuery = window.matchMedia('(max-width: 760px)');
+  const mobileNavQuery = window.matchMedia('(max-width: 1200px)');
 
   const syncNavMount = () => {
     if (mobileNavQuery.matches) {
@@ -138,7 +138,7 @@ loadHeader();
 const reviewTrack = document.getElementById('reviewTrack');
 
 if (reviewTrack) {
-  const mobileReview = window.matchMedia('(max-width: 760px)');
+  const mobileReview = window.matchMedia('(max-width: 1200px)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const originalCards = Array.from(reviewTrack.children);
   let reviewAnimationFrame = null;
@@ -213,7 +213,7 @@ const contactTypeModal = document.getElementById('contactTypeModal');
 const contactTypeSheet = contactTypeModal?.querySelector('.mobile-select-sheet');
 const contactTypeBackdrop = contactTypeModal?.querySelector('.mobile-select-backdrop');
 const contactTypeOptions = contactTypeModal?.querySelectorAll('[data-value]');
-const mobileContactSelect = window.matchMedia('(max-width: 760px)');
+const mobileContactSelect = window.matchMedia('(max-width: 1200px)');
 
 if (contactTypeSelect && contactTypeTrigger && contactTypeModal && contactTypeOptions?.length) {
   const closeContactTypeModal = () => {
@@ -444,7 +444,7 @@ const heroOrbs = document.querySelectorAll('.hero-orb');
 if (heroFrame && heroOrbs.length) {
   const mouse = { x: 0, y: 0, active: false };
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobileHero = () => window.matchMedia('(max-width: 760px)').matches;
+  const isMobileHero = () => window.matchMedia('(max-width: 1200px)').matches;
   const desktopOrbSeeds = [
     { x: 0.1, y: -0.05, vx: 0.13, vy: 0.07 },
     { x: 0.5, y: 0.12, vx: -0.08, vy: 0.11 },
