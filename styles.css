@@ -1803,7 +1803,7 @@ body.detail-page .detail-content {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1200px) {
   :root {
     --header-height: 65px;
     --main-side-padding: 14px;
