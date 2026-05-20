@@ -138,40 +138,129 @@ loadHeader();
 const reviewTrack = document.getElementById('reviewTrack');
 
 if (reviewTrack) {
-  let scrollPosition = 0;
+  const mobileReview = window.matchMedia('(max-width: 760px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const originalCards = Array.from(reviewTrack.children);
+  let reviewAnimationFrame = null;
+  let reviewLoopOffset = 0;
+  let reviewLoopDistance = 0;
+  let reviewLastTime = 0;
 
-  setInterval(() => {
-    const card = reviewTrack.querySelector('.review-card');
-    if (!card) return;
-
-    const distance = card.offsetWidth + 16;
-    scrollPosition += distance;
-
-    if (scrollPosition >= reviewTrack.scrollWidth - reviewTrack.clientWidth + 10) {
-      scrollPosition = 0;
+  const clearReviewLoop = () => {
+    if (reviewAnimationFrame) {
+      window.cancelAnimationFrame(reviewAnimationFrame);
+      reviewAnimationFrame = null;
     }
+    reviewLoopOffset = 0;
+    reviewLoopDistance = 0;
+    reviewLastTime = 0;
+    reviewTrack.classList.remove('is-review-loop');
+    reviewTrack.style.removeProperty('--review-loop-distance');
+    reviewTrack.style.removeProperty('transform');
+    reviewTrack.querySelectorAll('[data-review-clone="true"]').forEach((clone) => clone.remove());
+  };
 
-    reviewTrack.scrollTo({ left: scrollPosition, behavior: 'smooth' });
-  }, 3500);
+  const animateReviewLoop = (now) => {
+    if (!reviewLastTime) reviewLastTime = now;
+    const delta = Math.min(now - reviewLastTime, 48);
+    reviewLastTime = now;
+
+    reviewLoopOffset = (reviewLoopOffset + delta * 0.035) % reviewLoopDistance;
+    reviewTrack.style.transform = `translate3d(${-reviewLoopOffset}px, 0, 0)`;
+    reviewAnimationFrame = window.requestAnimationFrame(animateReviewLoop);
+  };
+
+  const setupReviewLoop = () => {
+    clearReviewLoop();
+
+    if (!mobileReview.matches || reducedMotion.matches) return;
+
+    originalCards.forEach((card) => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.reviewClone = 'true';
+      reviewTrack.appendChild(clone);
+    });
+
+    const firstClone = reviewTrack.querySelector('[data-review-clone="true"]');
+    if (!firstClone) return;
+
+    const loopDistance = firstClone.offsetLeft - reviewTrack.firstElementChild.offsetLeft;
+    if (!loopDistance) return;
+
+    reviewLoopDistance = loopDistance;
+    reviewTrack.style.setProperty('--review-loop-distance', `${reviewLoopDistance}px`);
+    reviewTrack.classList.add('is-review-loop');
+    reviewAnimationFrame = window.requestAnimationFrame(animateReviewLoop);
+  };
+
+  setupReviewLoop();
+  const onReviewMediaChange = () => setupReviewLoop();
+
+  if (mobileReview.addEventListener) {
+    mobileReview.addEventListener('change', onReviewMediaChange);
+    reducedMotion.addEventListener('change', onReviewMediaChange);
+  } else {
+    mobileReview.addListener(onReviewMediaChange);
+    reducedMotion.addListener(onReviewMediaChange);
+  }
 }
 
-const heroFrame = document.getElementById('heroFrame');
-const heroOrbs = document.querySelectorAll('.hero-orb');
+const contactTypeSelect = document.querySelector('select[name="type"]');
+const contactTypeTrigger = document.querySelector('.mobile-select-trigger');
+const contactTypeTriggerText = contactTypeTrigger?.querySelector('span');
+const contactTypeModal = document.getElementById('contactTypeModal');
+const contactTypeSheet = contactTypeModal?.querySelector('.mobile-select-sheet');
+const contactTypeBackdrop = contactTypeModal?.querySelector('.mobile-select-backdrop');
+const contactTypeOptions = contactTypeModal?.querySelectorAll('[data-value]');
+const mobileContactSelect = window.matchMedia('(max-width: 760px)');
 
-if (heroFrame && heroOrbs.length) {
-  const mouse = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.25, active: false };
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobile = () => window.matchMedia('(max-width: 760px)').matches;
-  const orbConfig = [
-    { baseX: 0.2, baseY: 0.26, driftX: 260, driftY: 145, speed: 0.0001, phase: 1.1, repel: 460, bobAmp: 10, bobFreq: 0.0011, elast: 0.038 },
-    { baseX: 0.5, baseY: 0.54, driftX: 280, driftY: 160, speed: 0.000092, phase: 2.8, repel: 420, bobAmp: 8, bobFreq: 0.001, elast: 0.036 },
-    { baseX: 0.76, baseY: 0.28, driftX: 220, driftY: 130, speed: 0.000115, phase: 4.9, repel: 380, bobAmp: 7, bobFreq: 0.00125, elast: 0.04 },
-  ];
+if (contactTypeSelect && contactTypeTrigger && contactTypeModal && contactTypeOptions?.length) {
+  const closeContactTypeModal = () => {
+    contactTypeModal.classList.remove('is-open');
+    contactTypeModal.setAttribute('aria-hidden', 'true');
+    contactTypeTrigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('modal-open');
+    contactTypeTrigger.focus();
+  };
 
-  const state = orbConfig.map((cfg) => ({ cfg, x: 0, y: 0, vx: 0, vy: 0, scale: 1 }));
-  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const openContactTypeModal = () => {
+    if (!mobileContactSelect.matches) return;
 
-  const getRectData = () => {
+    contactTypeModal.classList.add('is-open');
+    contactTypeModal.setAttribute('aria-hidden', 'false');
+    contactTypeTrigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('modal-open');
+    contactTypeSheet?.focus();
+  };
+
+  const setContactTypeValue = (value) => {
+    contactTypeSelect.value = value;
+    contactTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    if (contactTypeTriggerText) contactTypeTriggerText.textContent = value || '선택';
+  };
+
+  contactTypeTrigger.addEventListener('click', openContactTypeModal);
+  contactTypeBackdrop?.addEventListener('click', closeContactTypeModal);
+
+  contactTypeOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      setContactTypeValue(option.dataset.value);
+      closeContactTypeModal();
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && contactTypeModal.classList.contains('is-open')) {
+      closeContactTypeModal();
+    }
+  });
+
+  contactTypeSelect.addEventListener('change', () => {
+    if (contactTypeTriggerText) contactTypeTriggerText.textContent = contactTypeSelect.value || '선택';
+  });
+}
+
 const heroFrame = document.querySelector('.hero');
 const heroOrbs = document.querySelectorAll('.hero-orb');
 
@@ -212,17 +301,6 @@ if (heroFrame && heroOrbs.length) {
     return { left: rect.left, top: rect.top, width: rect.width, height: rect.height };
   };
 
-  let frameRect = getRectData();
-
-  const recalcBase = () => {
-    frameRect = getRectData();
-    state.forEach((orb, index) => {
-      orb.x = frameRect.width * orbConfig[index].baseX;
-      orb.y = frameRect.height * orbConfig[index].baseY;
-    });
-  };
-
-  recalcBase();
   let frameRect = getRectData();
 
   const recalcBounds = () => {
@@ -278,7 +356,6 @@ if (heroFrame && heroOrbs.length) {
       const speedScale = reduceMotion ? 0.25 : 1;
       const centerX = frameRect.left + orb.x + orb.size / 2;
       const centerY = frameRect.top + orb.y + orb.size / 2;
-
       const pointerInFrame =
         mouse.x >= frameRect.left &&
         mouse.x <= frameRect.left + frameRect.width &&
