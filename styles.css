@@ -2454,8 +2454,13 @@ body.detail-page .detail-content {
   }
 
   .contact-message-col {
+    display: block;
     order: 7;
     grid-column: auto;
+  }
+
+  .contact-message-col label {
+    width: 100%;
   }
 
   .contact-actions {
