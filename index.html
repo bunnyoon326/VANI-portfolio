@@ -173,11 +173,11 @@
               <div class="contact-fields contact-col">
                 <label>
                   이름
-                  <input type="text" name="name" required />
+                  <input type="text" name="name" minlength="2" required />
                 </label>
                 <label>
                   연락처
-                  <input type="tel" name="phone" required />
+                  <input type="tel" name="phone" inputmode="numeric" pattern="010-[0-9]{4}-[0-9]{4}" maxlength="13" required />
                 </label>
                 <label>
                   문의 유형
@@ -201,7 +201,7 @@
               <div class="contact-fields contact-col">
                 <label>
                   소속/단체
-                  <input type="text" name="organization" />
+                  <input type="text" name="organization" minlength="1" required />
                 </label>
                 <label>
                   이메일
@@ -209,13 +209,18 @@
                 </label>
                 <label>
                   <span class="label-row">보유예산 <small>*만 원 단위</small></span>
-                  <input type="text" name="budget" />
+                  <input type="text" name="budget" inputmode="numeric" pattern="[0-9]+" required />
                 </label>
               </div>
               <div class="contact-fields contact-message-col">
                 <label>
                   문의 내용
-                  <textarea name="message" rows="5" required></textarea>
+                  <textarea
+                    name="message"
+                    rows="5"
+                    placeholder="필요한 디자인, 고민 중인 방향, 참고 링크를 자유롭게 남겨주세요. 내용을 확인 후 1~2영업일 이내에 답변드리겠습니다."
+                    required
+                  ></textarea>
                 </label>
               </div>
               <div class="contact-actions contact-col">

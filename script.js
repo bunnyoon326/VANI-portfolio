@@ -261,6 +261,183 @@ if (contactTypeSelect && contactTypeTrigger && contactTypeModal && contactTypeOp
   });
 }
 
+const contactForm = document.querySelector('.contact-form');
+
+if (contactForm) {
+  const phoneInput = contactForm.querySelector('input[name="phone"]');
+  const budgetInput = contactForm.querySelector('input[name="budget"]');
+  const messageInput = contactForm.querySelector('textarea[name="message"]');
+  const blockedWords = [
+    '무료홍보',
+    '상위노출',
+    '검색노출',
+    '바이럴',
+    '체험단모집',
+    '블로그배포',
+    '트래픽',
+    '방문자증가',
+    '팔로워',
+    '좋아요',
+    '댓글작업',
+    '계정판매',
+    '디엠마케팅',
+    '대량발송',
+    '문자광고',
+    '광고문의',
+    '대출',
+    '무직자대출',
+    '소액대출',
+    '개인돈',
+    '급전',
+    '당일입금',
+    '고수익',
+    '부업',
+    '재택알바',
+    '리딩방',
+    '투자방',
+    '코인추천',
+    '주식추천',
+    '수익보장',
+    '먹튀',
+    '환전',
+    '성인사이트',
+    '19금',
+    '야동',
+    '음란',
+    '조건만남',
+    '출장마사지',
+    '유흥',
+    '도박',
+    '카지노',
+    '바카라',
+    '토토',
+    '스포츠토토',
+    '불법도박',
+    '불법',
+    '마약',
+    '대마',
+    '필로폰',
+    '시발',
+    '씨발',
+    'ㅅㅂ',
+    'ㅆㅂ',
+    '병신',
+    'ㅂㅅ',
+    '개새',
+    '꺼져',
+    '죽어',
+    '닥쳐',
+    '미친년',
+    '미친놈',
+    'script',
+    'javascript:',
+    'onerror',
+    'onclick',
+    'iframe',
+    'eval',
+    'alert(',
+    'document.cookie',
+    'select *',
+    'drop table',
+    'union select',
+  ];
+
+  const normalizeText = (value) => value.toLowerCase().replace(/\s+/g, '');
+  const compactBlockedWords = blockedWords.map((word) => normalizeText(word));
+  const blockedMessage = '문의 내용에 제출이 어려운 표현이 포함되어 있어요.\n필요한 내용만 정리해서 다시 보내주세요.';
+
+  const formatPhone = (value) => {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+  };
+
+  const isInvalidPhone = (value) => {
+    if (!/^010-\d{4}-\d{4}$/.test(value)) return true;
+
+    const [, middle, last] = value.split('-');
+    const repeated = /^(\d)\1{3}$/;
+    const sequential = (part) => part === '1234' || part === '0123' || part === '9876' || part === '4321';
+    return repeated.test(middle) || repeated.test(last) || sequential(middle) || sequential(last);
+  };
+
+  const hasBlockedWord = (value) => {
+    const normalized = normalizeText(value);
+    return compactBlockedWords.some((word) => normalized.includes(word));
+  };
+
+  phoneInput?.addEventListener('input', () => {
+    phoneInput.value = formatPhone(phoneInput.value);
+  });
+
+  budgetInput?.addEventListener('input', () => {
+    budgetInput.value = budgetInput.value.replace(/\D/g, '');
+  });
+
+  contactForm.addEventListener('submit', (event) => {
+    const nameInput = contactForm.querySelector('input[name="name"]');
+    const organizationInput = contactForm.querySelector('input[name="organization"]');
+    const emailInput = contactForm.querySelector('input[name="email"]');
+    const typeInput = contactForm.querySelector('select[name="type"]');
+
+    if ((nameInput?.value.trim().length || 0) < 2) {
+      event.preventDefault();
+      alert('이름은 2글자 이상 입력해주세요.');
+      nameInput?.focus();
+      return;
+    }
+
+    if ((organizationInput?.value.trim().length || 0) < 1) {
+      event.preventDefault();
+      alert('소속/단체를 입력해주세요.');
+      organizationInput?.focus();
+      return;
+    }
+
+    if (!phoneInput?.value || isInvalidPhone(phoneInput.value)) {
+      event.preventDefault();
+      alert('연락처는 010-0000-0000 형식의 실제 사용 가능한 번호로 입력해주세요.');
+      phoneInput?.focus();
+      return;
+    }
+
+    if (!emailInput?.validity.valid) {
+      event.preventDefault();
+      alert('이메일 형식에 맞게 입력해주세요.');
+      emailInput?.focus();
+      return;
+    }
+
+    if (!typeInput?.value) {
+      event.preventDefault();
+      alert('문의 유형을 선택해주세요.');
+      contactTypeTrigger?.focus();
+      return;
+    }
+
+    if (!budgetInput?.value || !/^\d+$/.test(budgetInput.value)) {
+      event.preventDefault();
+      alert('보유예산은 숫자만 입력해주세요.');
+      budgetInput?.focus();
+      return;
+    }
+
+    if (!messageInput?.value.trim()) {
+      event.preventDefault();
+      alert('문의 내용을 입력해주세요.');
+      messageInput?.focus();
+      return;
+    }
+
+    if (hasBlockedWord(messageInput.value)) {
+      event.preventDefault();
+      alert(blockedMessage);
+      messageInput.focus();
+    }
+  });
+}
+
 const heroFrame = document.querySelector('.hero');
 const heroOrbs = document.querySelectorAll('.hero-orb');
 
